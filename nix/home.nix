@@ -129,7 +129,10 @@ in {
       lfs.enable = true;
       userEmail = "erin@erinvanderveen.nl";
       userName = "Erin van der Veen";
-      extraConfig = { init.defaultBranch = "main"; };
+      extraConfig = {
+        init.defaultBranch = "main";
+        pull.rebase = "false";
+      };
     };
 
     password-store = {
