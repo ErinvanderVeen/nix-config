@@ -53,6 +53,7 @@ let
   mark1_background = "#ff5555";
 
   custom-vim-plugins = pkgs.callPackage ./custom-vim-plugins.nix { };
+  custom-packages = pkgs.callPackage ./custom-packages.nix { };
 
   nur = import (builtins.fetchTarball
     "https://github.com/nix-community/NUR/archive/master.tar.gz");
@@ -65,9 +66,10 @@ in {
       };
   };
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs // custom-packages; [
     cmus # Music
     betterdiscordctl # Manage Better discord, allows setting custom themes, like dracula
+    cg # The Clean code generator
     discord
     exa # ls alternative
     fd # find alternative
@@ -75,6 +77,7 @@ in {
     font-awesome # for i3-status-rs
     gnupg
     krita # for digital art
+    libreoffice-fresh # Office package
     maim # To create screenshots
     minecraft
     powerline-fonts # for powerline-go
@@ -173,7 +176,7 @@ in {
         ll = "exa -l";
         ls = "exa";
         update = "sudo nix-channel --update";
-        upgrade = "sudo nixos-rebuild switch";
+        upgrade = "sudo nixos-rebuild switch && home-manager switch";
       };
     };
 
@@ -210,8 +213,11 @@ in {
         vim-nix
       ];
       extraConfig = ''
-        filetype indent plugin on
         set clipboard=unnamedplus
+        set dir=~/.swp
+        set listchars=nbsp:¬,tab:❥\ ,extends:»,precedes:«,trail:•
+        set nu rnu
+        set path+=**
       '';
     };
 
@@ -250,7 +256,10 @@ in {
         font_size = "14";
         window_padding_width = "20";
       };
-      keybindings = { "ctrl+shift+n" = "new_os_window_with_cwd"; };
+      keybindings = {
+        "ctrl+shift+n" = "new_os_window_with_cwd";
+        "ctrl+shift+t" = "new_tab_with_cwd";
+      };
     };
 
     rofi = {
@@ -287,7 +296,7 @@ in {
         border = 0;
         titlebar = false;
       };
-      menu = "${pkgs.rofi}/bin/rofi -show run";
+      menu = "\"${pkgs.rofi}/bin/rofi -modi window,drun,ssh,combi -show combi -font \\\\\"Ubuntu 12\\\\\" -icon-theme \\\\\"Paper\\\\\" -show-icons\"";
       modifier = "Mod4";
       bars = [{
         colors = {
