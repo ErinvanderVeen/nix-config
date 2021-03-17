@@ -69,7 +69,6 @@ in {
   home.packages = with pkgs // custom-packages; [
     cmus # Music
     betterdiscordctl # Manage Better discord, allows setting custom themes, like dracula
-    cg # The Clean code generator
     discord
     exa # ls alternative
     fd # find alternative
@@ -89,11 +88,15 @@ in {
     xclip # to copy screenshots to clipboard
     xfce.thunar-archive-plugin # unzip archives
     youtube-dl # download youtube videos
+
+    # Clean packages
+    cg # The Clean code generator
+    clm # Clean make
   ];
 
   home.sessionVariables = {
     CLEAN_HOME = "~/clean";
-    PATH = "$CLEAN_HOME/bin:$PATH";
+    PATH = "$PATH:$CLEAN_HOME/bin";
   };
 
   home.keyboard = null;

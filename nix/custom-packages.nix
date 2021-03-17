@@ -17,4 +17,22 @@
       cp cg $out/bin
     '';
   };
+
+  clm = pkgs.stdenv.mkDerivation {
+    name = "clm";
+    src = pkgs.fetchgit {
+      url = "https://gitlab.science.ru.nl/clean-and-itasks/clm.git";
+      rev = "5bf61d5952f4ad9f03a5838100735fd1e998e39b";
+      sha256 = "05fbrd7725bqjrcv9nk5i85xccdbl09ldmbsy098b582ggivh6hw";
+    };
+    buildInputs = with pkgs; [ gnumake gcc ];
+    buildPhase = ''
+      make -f Makefile.linux64 all
+    '';
+    installPhase = ''
+      mkdir -p $out/bin
+      cp clm $out/bin
+      cp patch_bin $out/bin
+    '';
+  };
 }
