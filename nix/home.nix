@@ -386,8 +386,8 @@ in {
           info_type = "used";
           unit = "GB";
           interval = 600;
-          warning = 20.0;
-          alert = 10.0;
+          warning = 80.0;
+          alert = 90.0;
           format = " {used}/{total} {unit}";
         }
         {
