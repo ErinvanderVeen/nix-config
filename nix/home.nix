@@ -207,10 +207,11 @@ in {
       enable = true;
       plugins = with pkgs.vimPlugins // custom-vim-plugins; [
         YouCompleteMe
-        vim-toml
-        vim-css-color
         vim-clean
+        vim-css-color
+        vim-gitgutter
         vim-nix
+        vim-toml
       ];
       extraConfig = ''
         set clipboard=unnamedplus
