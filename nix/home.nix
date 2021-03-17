@@ -352,10 +352,23 @@ in {
       enable = true;
       settings = {
         global = {
-          background = "${background}";
-          foreground = "${foreground}";
           font = "Ubuntu";
           geometry = "300x5-25+25";
+        };
+        urgency_low = {
+          background = "${color2}";
+          foreground = "${background}";
+          timeout = 5;
+        };
+        urgency_normal = {
+          background = "${color3}";
+          foreground = "${background}";
+          timeout = 20;
+        };
+        urgency_critical = {
+          background = "${color1}";
+          foreground = "${background}";
+          timeout = 0;
         };
       };
     };
