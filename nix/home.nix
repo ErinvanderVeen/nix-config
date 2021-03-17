@@ -338,6 +338,11 @@ in {
     picom = {
       enable = true;
       inactiveDim = "0.2";
+      vSync = true;
+      extraOptions = ''
+        xrender-sync-fence = true;
+        glx-no-stencil = true;
+      '';
     };
 
     gnome-keyring.enable = true;
