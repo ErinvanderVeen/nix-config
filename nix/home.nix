@@ -172,9 +172,10 @@ in {
       '';
       shellAliases = {
         icat = "kitty +kitten icat";
-        la = "exa -al";
-        ll = "exa -l";
+        la = "exa -al --git";
+        ll = "exa -l --git";
         ls = "exa";
+        con = "home-manager edit";
         update = "sudo nix-channel --update";
         upgrade = "sudo nixos-rebuild switch && home-manager switch";
       };
