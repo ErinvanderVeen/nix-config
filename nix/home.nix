@@ -361,6 +361,10 @@ in {
   services = {
     nextcloud-client = { enable = true; };
 
+    password-store-sync {
+      enable = true;
+    };
+
     picom = {
       enable = true;
       inactiveDim = "0.2";
