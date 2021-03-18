@@ -127,6 +127,31 @@ in {
       highlightBaseName = true;
     };
 
+    autorandr = {
+      enable = true;
+
+      profiles = {
+        pc = {
+          config = {
+            HDMI-0 = {
+              enable = true;
+              primary = true;
+              position = "0x0";
+              mode = "1920x1080";
+              rate = "60";
+            };
+            HDMI-1 = {
+              enable = true;
+              primary = false;
+              position = "1920x0";
+              mode = "1920x1080";
+              rate = "60";
+            };
+          };
+        };
+      };
+    };
+
     git = {
       enable = true;
       lfs.enable = true;
@@ -298,7 +323,8 @@ in {
         border = 0;
         titlebar = false;
       };
-      menu = "\"${pkgs.rofi}/bin/rofi -modi window,drun,ssh,combi -show combi -font \\\\\"Ubuntu 12\\\\\" -icon-theme \\\\\"Paper\\\\\" -show-icons\"";
+      menu = ''
+        "${pkgs.rofi}/bin/rofi -modi window,drun,ssh,combi -show combi -font \\"Ubuntu 12\\" -icon-theme \\"Paper\\" -show-icons"'';
       modifier = "Mod4";
       bars = [{
         colors = {
