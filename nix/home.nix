@@ -393,6 +393,7 @@ in {
         border = 0;
         titlebar = false;
       };
+      focus.mouseWarping = false;
       menu = ''
         "${pkgs.rofi}/bin/rofi -modi window,drun,ssh,combi -show combi -font \\"Ubuntu 12\\" -icon-theme \\"Paper\\" -show-icons"'';
       modifier = "Mod4";
@@ -419,7 +420,7 @@ in {
         statusCommand =
           "i3status-rs ~/.config/i3status-rust/config-default.toml";
       }];
-      startup = [{ command = "autorandr --change"; }];
+      startup = [{ command = "autorandr --change"; } { command = "feh --bg-scale /etc/nixos/background_image.jpg"; }];
       keybindings =
         let modifier = config.xsession.windowManager.i3.config.modifier;
         in lib.mkOptionDefault {

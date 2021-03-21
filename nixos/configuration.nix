@@ -9,6 +9,8 @@
     ./hardware-configuration.nix
   ];
 
+  programs.steam.enable = true;
+
   # Unfree packages :( Required for nvidia drivers
   nixpkgs.config.allowUnfree = true;
 
@@ -52,7 +54,22 @@
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    daemon.config = {
+      alternate-sample-rate = "44100";
+      daemonize = "no";
+      default-sample-format = "float32le";
+      default-sample-rate = 48000;
+      enable-lfe-remixing = "no";
+      high-priority = "yes";
+      nice-level = -11;
+      realtime-priority = 9;
+      realtime-scheduling = "yes";
+      resample-method = "soxr-vhq";
+      rlimit-rtprio = 9;
+    };
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
@@ -76,13 +93,19 @@
         enable = true;
         noDesktop = true;
         enableXfwm = false;
+        thunarPlugins = with pkgs.xfce; [ thunar-archive-plugin thunar-volman ];
       };
     };
 
     displayManager = {
+      autoLogin = {
+        enable = true;
+        user = "erin";
+      };
       lightdm = {
         enable = true;
-        background = "/etc/nixos/background-image.jpg";
+        background = "/etc/nixos/background_image.jpg";
+        greeters = { enso = { enable = true; }; };
       };
       defaultSession = "xfce+i3";
     };
@@ -108,13 +131,6 @@
     (neovim.override {
       viAlias = true;
       vimAlias = true;
-      configure = {
-        packages.myPlugins = with pkgs.vimPlugins; {
-          start = [ vim-nix ];
-          opt = [ ];
-        };
-        customRC = "";
-      };
     })
   ];
 
@@ -128,8 +144,6 @@
     enable = true;
     enableSSHSupport = true;
   };
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
