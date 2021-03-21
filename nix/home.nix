@@ -53,20 +53,10 @@ let
   mark1_background = "#ff5555";
 
   custom-vim-plugins = pkgs.callPackage ./custom-vim-plugins.nix { };
-  custom-packages = pkgs.callPackage ./custom-packages.nix { };
-
-  nur = import (builtins.fetchTarball
-    "https://github.com/nix-community/NUR/archive/master.tar.gz");
 in {
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball
-      "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-        inherit pkgs;
-      };
-  };
 
-  home.packages = with pkgs // custom-packages; [
+  home.packages = with pkgs; [
     cmus # Music
     betterdiscordctl # Manage Better discord, allows setting custom themes, like dracula
     discord
@@ -76,28 +66,24 @@ in {
     fzf # fuzzy finder
     font-awesome # for i3-status-rs
     gnupg
+    glab # CLI for GitLab
     krita # for digital art
     libreoffice-fresh # Office package
     maim # To create screenshots
     minecraft
+    nodejs-slim # Needed for coc
     powerline-fonts # for powerline-go
     powerline-go # statusline for bash
-    steam
     skype
     translate-shell # translate sentences in the terminal
     watson # cli time tracker
     xclip # to copy screenshots to clipboard
-    xfce.thunar-archive-plugin # unzip archives
     youtube-dl # download youtube videos
-
-    # Clean packages
-    cg # The Clean code generator
-    clm # Clean make
   ];
 
   home.sessionVariables = {
     CLEAN_HOME = "~/clean";
-    PATH = "$PATH:$CLEAN_HOME/bin";
+    PATH = "$PATH:$CLEAN_HOME/bin:$CLEAN_HOME/lib/exe";
   };
 
   home.keyboard = null;
@@ -126,6 +112,69 @@ in {
       enable = true;
       showProgramPath = false;
       highlightBaseName = true;
+    };
+
+    i3status-rust = {
+      enable = true;
+      bars.default = {
+        settings = {
+          theme = {
+            name = "native";
+            overrides = {
+              critical_bg = "${color1}";
+              critical_fg = "${foreground}";
+              good_bg = "${color2}";
+              good_fg = "${background}";
+              idle_bg = "${background}";
+              idle_fg = "${foreground}";
+              info_bg = "${color4}";
+              info_fg = "${foreground}";
+              warning_bg = "${color3}";
+              warning_fg = "${background}";
+            };
+          };
+          icons = { name = "awesome5"; };
+        };
+        blocks = [
+          {
+            block = "watson";
+            show_time = true;
+          }
+          {
+            block = "disk_space";
+            path = "/";
+            alias = "/";
+            info_type = "used";
+            unit = "GB";
+            interval = 600;
+            warning = 80.0;
+            alert = 90.0;
+            format = " {used}/{total} {unit}";
+          }
+          {
+            block = "memory";
+            display_type = "memory";
+            format_mem = "{Mup}%";
+            format_swap = "{SUp}%";
+          }
+          {
+            block = "cpu";
+            interval = 1;
+          }
+          {
+            block = "load";
+            interval = 1;
+            format = "{1m}";
+          }
+          { block = "sound"; }
+          {
+            block = "time";
+            interval = 60;
+            format = "%A %d/%m %R";
+            locale = "se_NO";
+          }
+        ];
+      };
     };
 
     autorandr = {
@@ -218,17 +267,6 @@ in {
 
     firefox = {
       enable = true;
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        duckduckgo-privacy-essentials
-        ecosia
-        facebook-container
-        https-everywhere
-        i-dont-care-about-cookies
-        link-cleaner
-        linkhints
-        swedish-dictionary
-      ];
-
       profiles = {
         myprofile = {
           isDefault = true;
@@ -239,21 +277,45 @@ in {
 
     neovim = {
       enable = true;
+      withPython3 = true;
+      withNodeJs = true;
       plugins = with pkgs.vimPlugins // custom-vim-plugins; [
-        YouCompleteMe
+        airline
         vim-clean
         vim-css-color
         vim-gitgutter
         vim-nix
         vim-toml
+        {
+          plugin = coc-nvim;
+          config = ''
+            nmap <silent> [g <Plug>(coc-diagnostic-prev)
+            nmap <silent> ]g <Plug>(coc-diagnostic-next)
+            nmap <silent> gd <Plug>(coc-definition)
+            nmap <silent> gy <Plug>(coc-type-definition)
+            nmap <silent> gi <Plug>(coc-implementation)
+            nmap <silent> gr <Plug>(coc-references)
+            nmap <leader>ac  <Plug>(coc-codeaction)
+            nmap <leader>qf  <Plug>(coc-fix-current)
+          '';
+        }
+        coc-rust-analyzer
       ];
       extraConfig = ''
+        set cc=120
         set clipboard=unnamedplus
         set dir=~/.swp
         set listchars=nbsp:¬,tab:❥\ ,extends:»,precedes:«,trail:•
+        set list
+        set mouse=a
         set nu rnu
         set path+=**
+        set tw=119
+        set tabstop=4
+        set shiftwidth=4
+        set noexpandtab
       '';
+      extraPackages = with pkgs; [ rust-analyzer ];
     };
 
     kitty = {
@@ -357,6 +419,7 @@ in {
         statusCommand =
           "i3status-rs ~/.config/i3status-rust/config-default.toml";
       }];
+      startup = [{ command = "autorandr --change"; }];
       keybindings =
         let modifier = config.xsession.windowManager.i3.config.modifier;
         in lib.mkOptionDefault {
@@ -364,6 +427,11 @@ in {
             "exec --no-startup-id maim --select | xclip -selection clipboard -t image/png";
         };
     };
+  };
+
+  xsession.pointerCursor = {
+    package = pkgs.numix-cursor-theme;
+    name = "Numix-Cursor";
   };
 
   services = {
@@ -429,66 +497,11 @@ in {
       };
     };
   };
-  programs.i3status-rust = {
-    enable = true;
-    bars.default = {
-      settings = {
-        theme = {
-          name = "native";
-          overrides = {
-            critical_bg = "${color1}";
-            critical_fg = "${foreground}";
-            good_bg = "${color2}";
-            good_fg = "${background}";
-            idle_bg = "${background}";
-            idle_fg = "${foreground}";
-            info_bg = "${color4}";
-            info_fg = "${foreground}";
-            warning_bg = "${color3}";
-            warning_fg = "${background}";
-          };
-        };
-        icons = { name = "awesome5"; };
-      };
-      blocks = [
-        {
-          block = "watson";
-          show_time = true;
-        }
-        {
-          block = "disk_space";
-          path = "/";
-          alias = "/";
-          info_type = "used";
-          unit = "GB";
-          interval = 600;
-          warning = 80.0;
-          alert = 90.0;
-          format = " {used}/{total} {unit}";
-        }
-        {
-          block = "memory";
-          display_type = "memory";
-          format_mem = "{Mup}%";
-          format_swap = "{SUp}%";
-        }
-        {
-          block = "cpu";
-          interval = 1;
-        }
-        {
-          block = "load";
-          interval = 1;
-          format = "{1m}";
-        }
-        { block = "sound"; }
-        {
-          block = "time";
-          interval = 60;
-          format = "%A %d/%m %R";
-          locale = "se_NO";
-        }
-      ];
-    };
-  };
+
+  # CoC is configured using its own configuratio file
+  xdg.configFile."nvim/coc-settings.json".text = ''
+    {
+      "rust-analyzer.server.path": "${pkgs.rust-analyzer}/bin/rust-analyzer"
+    }
+  '';
 }
