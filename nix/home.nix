@@ -2,9 +2,9 @@
 
 let
   foreground = "#fafafa";
-  background = "#313440";
+  background = "#282A36";
   selection_foreground = "#fafafa";
-  selection_background = "#252834";
+  selection_background = "#313440";
 
   url_color = "#5fafff";
 
@@ -216,6 +216,7 @@ in {
       userName = "Erin van der Veen";
       extraConfig = {
         init.defaultBranch = "main";
+        merge.tool = "nvimdiff";
         pull.rebase = "false";
       };
     };
@@ -250,7 +251,7 @@ in {
       initExtra = ''
         function cd {
           builtin cd "$@" && exa -l
-          }
+        }
       '';
       shellAliases = {
         icat = "kitty +kitten icat";
@@ -260,6 +261,10 @@ in {
         con = "home-manager edit";
         update = "sudo nix-channel --update";
         upgrade = "sudo nixos-rebuild switch && home-manager switch";
+        grep = "grep --color";
+        cls = "grep -rn --include '*.dcl' --include '*.icl'";
+        vfzf = "vim $(fzf)";
+        kfzf = "kak $(fzf)";
       };
     };
 
@@ -275,17 +280,74 @@ in {
       };
     };
 
+    kakoune = {
+      enable = true;
+      config = {
+        alignWithTabs = true;
+        colorScheme = "dracula";
+        indentWidth = 0;
+        numberLines = {
+          enable = true;
+          highlightCursor = true;
+          relative = true;
+        };
+        showMatching = true;
+        showWhitespace  = {
+          enable = true;
+        };
+        tabStop = 4;
+        ui = {
+          enableMouse = true;
+          assistant = "cat";
+          setTitle = true;
+        };
+        wrapLines = {
+          enable = true;
+          indent = true;
+          marker = "⏎";
+        };
+      };
+      plugins = with pkgs.kakounePlugins; [
+        fzf-kak
+        sleuth-kak
+        powerline-kak
+        quickscope-kak
+        active-window-kak
+        kakoune-state-save
+        kak-lsp
+      ];
+      extraConfig = ''
+        # Enable kak-lsp
+        eval %sh{kak-lsp --kakoune -s $kak_session}
+        lsp-enable
+        # Highlight trailing
+        add-highlighter global/ regex \h+$ 0:Error
+        # Use ,y to copy to system keyboard
+        map global user y '<a-|>xsel -i -b<ret>'
+        # Clean
+        source ~/Projects/clean-kak/clean.kak
+        '';
+    };
+
     neovim = {
       enable = true;
       withPython3 = true;
       withNodeJs = true;
       plugins = with pkgs.vimPlugins // custom-vim-plugins; [
         airline
+        haskell-vim
+        idris2-vim
         vim-clean
         vim-css-color
         vim-gitgutter
         vim-nix
         vim-toml
+        {
+          plugin = rust-vim;
+          config = ''
+            let g:rustfmt_autosave = 1
+          '';
+        }
         {
           plugin = coc-nvim;
           config = ''
@@ -297,9 +359,13 @@ in {
             nmap <silent> gr <Plug>(coc-references)
             nmap <leader>ac  <Plug>(coc-codeaction)
             nmap <leader>qf  <Plug>(coc-fix-current)
+            nmap <leader>rn  <Plug>(coc-rename)
+            nmap <leader>f   <Plug>(coc-format)
+            hi CocFloating ctermbg=0
           '';
         }
         coc-rust-analyzer
+        fzf-vim
       ];
       extraConfig = ''
         set cc=120
@@ -314,6 +380,11 @@ in {
         set tabstop=4
         set shiftwidth=4
         set noexpandtab
+        hi NormalFloat guibg=${background}
+        autocmd BufReadPost *
+          \ if line("'\"") > 0 && line("'\"") <= line("$") |
+          \   exe "normal! g`\"" |
+          \ endif
       '';
       extraPackages = with pkgs; [ rust-analyzer ];
     };
@@ -436,7 +507,7 @@ in {
   };
 
   services = {
-    nextcloud-client = { enable = true; };
+    #nextcloud-client = { enable = true; };
 
     password-store-sync = { enable = true; };
 
@@ -450,7 +521,9 @@ in {
       '';
     };
 
-    gnome-keyring.enable = true;
+    gnome-keyring = {
+      enable = true;
+    };
 
     # Notification daemon
     dunst = {
@@ -499,10 +572,125 @@ in {
     };
   };
 
+  xdg.configFile."kak/colors/dracula-transparent.kak".text = ''
+    colorscheme dracula
+
+    set-face global Default %opt{foreground}
+    set-face global LineNumbers %opt{dimmed_background}
+    set-face global LineNumberCursor "%opt{foreground}+b"
+    set-face global LineNumbersWrapped "%opt{dimmed_background}+i"
+    set-face global Information %opt{yellow}
+    set-face global StatusLine %opt{foreground}
+    set-face global StatusLineInfo %opt{purple}
+    set-face global StatusLineValue %opt{orange}
+    set-face global BufferPadding %opt{dimmed_background}
+    set-face global Whitespace %opt{dimmed_background}
+    '';
+
+  xdg.configFile."kak/colors/dracula.kak".text = ''
+    declare-option str black 'rgb:282a36'
+    declare-option str gray 'rgb:44475a'
+    declare-option str white 'rgb:f8f8f2'
+    declare-option str blue 'rgb:6272a4'
+    declare-option str cyan 'rgb:8be9fd'
+    declare-option str green 'rgb:50fa7b'
+    declare-option str orange 'rgb:ffb86c'
+    declare-option str pink 'rgb:ff79c6'
+    declare-option str purple 'rgb:bd93f9'
+    declare-option str red 'rgb:ff5555'
+    declare-option str yellow 'rgb:f1fa8c'
+
+    declare-option str background %opt{black}
+    declare-option str dimmed_background %opt{gray}
+    declare-option str foreground %opt{white}
+
+    # For code
+    set-face global value "%opt{green}"
+    set-face global type "%opt{purple}"
+    set-face global variable "%opt{red}"
+    set-face global module "%opt{red}"
+    set-face global function "%opt{red}"
+    set-face global string "%opt{yellow}"
+    set-face global keyword "%opt{cyan}"
+    set-face global operator "%opt{orange}"
+    set-face global attribute "%opt{pink}"
+    set-face global comment "%opt{blue}+i"
+    set-face global meta "%opt{red}"
+    set-face global builtin "%opt{white}+b"
+
+    # For markup
+    set-face global title "%opt{red}"
+    set-face global header "%opt{orange}"
+    set-face global bold "%opt{pink}"
+    set-face global italic "%opt{purple}"
+    set-face global mono "%opt{green}"
+    set-face global block "%opt{cyan}"
+    set-face global link "%opt{green}"
+    set-face global bullet "%opt{green}"
+    set-face global list "%opt{white}"
+
+    # Builtin faces
+    set-face global Default "%opt{white},%opt{black}"
+    set-face global PrimarySelection "%opt{black},%opt{pink}"
+    set-face global SecondarySelection "%opt{black},%opt{purple}"
+    set-face global PrimaryCursor "%opt{black},%opt{cyan}"
+    set-face global SecondaryCursor "%opt{black},%opt{orange}"
+    set-face global PrimaryCursorEol "%opt{black},%opt{cyan}"
+    set-face global SecondaryCursorEol "%opt{black},%opt{orange}"
+    set-face global LineNumbers "%opt{gray},%opt{black}"
+    set-face global LineNumberCursor "%opt{white},%opt{gray}+b"
+    set-face global LineNumbersWrapped "%opt{gray},%opt{black}+i"
+    set-face global MenuForeground "%opt{blue},%opt{white}+b"
+    set-face global MenuBackground "%opt{white},%opt{blue}"
+    set-face global MenuInfo "%opt{cyan},%opt{blue}"
+    set-face global Information "%opt{yellow},%opt{gray}"
+    set-face global Error "%opt{black},%opt{red}"
+    set-face global StatusLine "%opt{white},%opt{black}"
+    set-face global StatusLineMode "%opt{black},%opt{green}"
+    set-face global StatusLineInfo "%opt{purple},%opt{black}"
+    set-face global StatusLineValue "%opt{orange},%opt{black}"
+    set-face global StatusCursor "%opt{white},%opt{blue}"
+    set-face global Prompt "%opt{black},%opt{green}"
+    set-face global MatchingChar "%opt{black},%opt{blue}"
+    set-face global Whitespace "%opt{gray},%opt{black}+f"
+    set-face global WrapMarker Whitespace
+    set-face global BufferPadding "%opt{gray},%opt{black}"
+    '';
+
   # CoC is configured using its own configuratio file
   xdg.configFile."nvim/coc-settings.json".text = ''
     {
-      "rust-analyzer.server.path": "${pkgs.rust-analyzer}/bin/rust-analyzer"
+      "rust-analyzer.server.path": "${pkgs.rust-analyzer}/bin/rust-analyzer",
+
+      "languageserver": {
+        "haskell": {
+          "command": "haskell-language-server-wrapper",
+          "args": [
+            "--lsp"
+          ],
+          "rootPatterns": [
+            "*.cabal",
+            ".stack.yaml",
+            ".hie-bios",
+            "BUILD.bazel",
+            "cabal.config",
+            "package.yaml"
+          ],
+          "filetypes": [
+            "hs",
+            "lhs",
+            "haskell"
+          ],
+          "initializationOptions": {
+            "languageServerHaskell": {
+              "hlintOn": true,
+              "maxNumberOfProblems": 10,
+              "completionSnippetsOn": true
+            }
+          }
+        }
+      }
+
     }
   '';
 }
