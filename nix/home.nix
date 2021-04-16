@@ -83,10 +83,9 @@ in
     lutris # Non-steam games
     maim # To create screenshots
     minecraft
+    nix-index # Allow searching for files in nixpkgs
     nodejs-slim # Needed for coc
     powerline-fonts # for powerline-go
-    powerline # the kakoune plugin requires traditional powerline
-    powerline-go # statusline for bash
     qtpass # pass gui
     ripgrep # used for fzf, general replacement for grep
     rnix-lsp # nix language server
@@ -405,6 +404,7 @@ in
             set packpath+=${pkgs.vimPlugins.dracula-vim}/share/vim-plugins/
             packadd! dracula-vim
             colorscheme dracula
+            set termguicolors
           '';
         }
         {
@@ -508,14 +508,16 @@ in
         "ctrl+shift+t" = "new_tab_with_cwd";
         "ctrl+shift+enter" = "new_window_with_cwd";
         # Windows
-        "shift+up" = "move_window up";
-        "shift+left" = "move_window left";
-        "shift+right" = "move_window right";
-        "shift+down" = "move_window down";
-        "ctrl+left" = "neighboring_window left";
-        "ctrl+right" = "neighboring_window right";
-        "ctrl+up" = "neighboring_window up";
-        "ctrl+down" = "neighboring_window down";
+        "shift+k" = "move_window up";
+        "shift+h" = "move_window left";
+        "shift+l" = "move_window right";
+        "shift+j" = "move_window down";
+        "ctrl+h" = "neighboring_window left";
+        "ctrl+l" = "neighboring_window right";
+        "ctrl+k" = "neighboring_window up";
+        "ctrl+j" = "neighboring_window down";
+        "ctrl+shift+l" = "next_tab";
+        "ctrl+shift+h" = "previous_tab";
       };
       extraConfig = ''
         enabled_layouts tall:bias=70;full_size=1;mirrored=false
