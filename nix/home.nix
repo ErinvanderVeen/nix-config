@@ -76,7 +76,7 @@ in
     glab # CLI for GitLab
     gnome-mpv # video player
     gnupg
-    haskell-language-server
+    haskell-language-server # Haskell language server
     hlint # Haskell linter
     krita # for digital art
     libreoffice-fresh # Office package
@@ -307,84 +307,6 @@ in
       };
     };
 
-    kakoune = {
-      enable = true;
-      config = {
-        alignWithTabs = true;
-        colorScheme = "dracula";
-        indentWidth = 0;
-        numberLines = {
-          enable = true;
-          highlightCursor = true;
-          relative = true;
-        };
-        showMatching = true;
-        showWhitespace = {
-          enable = true;
-        };
-        tabStop = 4;
-        ui = {
-          enableMouse = true;
-          assistant = "none";
-          setTitle = true;
-        };
-        wrapLines = {
-          enable = true;
-          indent = true;
-          marker = "⏎";
-        };
-      };
-      plugins = with pkgs.kakounePlugins; [
-        fzf-kak
-        sleuth-kak
-        powerline-kak
-        active-window-kak
-        kakoune-state-save
-        kak-lsp
-      ];
-      extraConfig = ''
-        # Enable kak-lsp
-        eval %sh{kak-lsp --kakoune -s $kak_session --config ~/.config/kak-lsp/kap-lsp.toml}
-        # Inline lsp diagnostics
-        lsp-enable
-        lsp-inlay-diagnostics-enable global
-        set global lsp_hover_max_lines 10
-        lsp-auto-hover-enable
-        set global lsp_hover_anchor true
-        # Powerline
-        powerline-start
-        # Highlight
-        add-highlighter global/ regex \h+$ 0:Error # Trailing whitespace
-        add-highlighter global/ column 120 default,rgb:404040 # Column bar
-        # Usermode commands
-        map global user y '<a-|>xsel -i -b<ret>' -docstring "copy to system clipboard"
-        map global user p '!xsel -o -b<ret>' -docstring "paste from system clipboard"
-        map global user l ': enter-user-mode lsp<ret>' -docstring "language server commands"
-        map global user W '|fmt --width 120<ret>' -docstring "Wrap to 120 columns"
-        map global user s ': spell-replace<ret>' -docstring "Fix spelling"
-        map global user f ': fzf-mode<ret>' -docstring "Enter fzf mode"
-        # Clean
-        source ~/Projects/clean-kak/clean.kak
-        # Inlay rust-analyzer
-        hook global WinSetOption filetype=rust %{
-          hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
-          hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
-          hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
-          hook -once -always window WinSetOption filetype=.* %{
-            remove-hooks window rust-inlay-hints
-          }
-        }
-        hook global WinSetOption filetype=rust %{
-          hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
-          hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
-          hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
-          hook -once -always window WinSetOption filetype=.* %{
-            remove-hooks window semantic-tokens
-          }
-        }
-      '';
-    };
-
     neovim = {
       enable = true;
       withPython3 = true;
@@ -508,10 +430,6 @@ in
         "ctrl+shift+t" = "new_tab_with_cwd";
         "ctrl+shift+enter" = "new_window_with_cwd";
         # Windows
-        "shift+k" = "move_window up";
-        "shift+h" = "move_window left";
-        "shift+l" = "move_window right";
-        "shift+j" = "move_window down";
         "ctrl+h" = "neighboring_window left";
         "ctrl+l" = "neighboring_window right";
         "ctrl+k" = "neighboring_window up";
@@ -674,124 +592,19 @@ in
     };
   };
 
-  xdg.configFile."kak-lsp/kap-lsp.toml".text = ''
-    #snippet_support = true
-
-    [language.rust]
-    filetypes = ["rust"]
-    roots = ["Cargo.toml"]
-    command = "rust-analyzer"
-    [language.rust.initialization_options]
-    diagnostics.disabled = ["unresolved-proc-macro"]
-
-    [language.nix]
-    filetypes = ["nix"]
-    roots = ["flake.nix", "shell.nix", ".git"]
-    command = "rnix-lsp"
-
-    [language.haskell]
-    filetypes = ["haskell"]
-    roots = ["Setup.hs", "stack.yaml", "*.cabal"]
-    command = "haskell-language-server-wrapper"
-    args = ["--lsp"]
-
-    [language.latex]
-    filetypes = ["latex"]
-    roots = [".git"]
-    command = "texlab"
-  '';
-
-  xdg.configFile."kak/colors/dracula-transparent.kak".text = ''
-    colorscheme dracula
-
-    set-face global Default %opt{foreground}
-    set-face global LineNumbers %opt{dimmed_background}
-    set-face global LineNumberCursor "%opt{foreground}+b"
-    set-face global LineNumbersWrapped "%opt{dimmed_background}+i"
-    set-face global Information %opt{yellow}
-    set-face global StatusLine %opt{foreground}
-    set-face global StatusLineInfo %opt{purple}
-    set-face global StatusLineValue %opt{orange}
-    set-face global BufferPadding %opt{dimmed_background}
-    set-face global Whitespace %opt{dimmed_background}
-  '';
-
-  xdg.configFile."kak/colors/dracula.kak".text = ''
-    declare-option str black 'rgb:282a36'
-    declare-option str gray 'rgb:44475a'
-    declare-option str white 'rgb:f8f8f2'
-    declare-option str blue 'rgb:6272a4'
-    declare-option str cyan 'rgb:8be9fd'
-    declare-option str green 'rgb:50fa7b'
-    declare-option str orange 'rgb:ffb86c'
-    declare-option str pink 'rgb:ff79c6'
-    declare-option str purple 'rgb:bd93f9'
-    declare-option str red 'rgb:ff5555'
-    declare-option str yellow 'rgb:f1fa8c'
-
-    declare-option str background %opt{black}
-    declare-option str dimmed_background %opt{gray}
-    declare-option str foreground %opt{white}
-
-    # For code
-    set-face global value "%opt{green}"
-    set-face global type "%opt{purple}"
-    set-face global variable "%opt{red}"
-    set-face global module "%opt{red}"
-    set-face global function "%opt{red}"
-    set-face global string "%opt{yellow}"
-    set-face global keyword "%opt{cyan}"
-    set-face global operator "%opt{orange}"
-    set-face global attribute "%opt{pink}"
-    set-face global comment "%opt{blue}+i"
-    set-face global meta "%opt{red}"
-    set-face global builtin "%opt{white}+b"
-
-    # For markup
-    set-face global title "%opt{red}"
-    set-face global header "%opt{orange}"
-    set-face global bold "%opt{pink}"
-    set-face global italic "%opt{purple}"
-    set-face global mono "%opt{green}"
-    set-face global block "%opt{cyan}"
-    set-face global link "%opt{green}"
-    set-face global bullet "%opt{green}"
-    set-face global list "%opt{white}"
-
-    # Builtin faces
-    set-face global Default "%opt{white},%opt{black}"
-    set-face global PrimarySelection "%opt{black},%opt{pink}"
-    set-face global SecondarySelection "%opt{black},%opt{purple}"
-    set-face global PrimaryCursor "%opt{black},%opt{cyan}"
-    set-face global SecondaryCursor "%opt{black},%opt{orange}"
-    set-face global PrimaryCursorEol "%opt{black},%opt{cyan}"
-    set-face global SecondaryCursorEol "%opt{black},%opt{orange}"
-    set-face global LineNumbers "%opt{gray},%opt{black}"
-    set-face global LineNumberCursor "%opt{white},%opt{gray}+b"
-    set-face global LineNumbersWrapped "%opt{gray},%opt{black}+i"
-    set-face global MenuForeground "%opt{blue},%opt{white}+b"
-    set-face global MenuBackground "%opt{white},%opt{blue}"
-    set-face global MenuInfo "%opt{cyan},%opt{blue}"
-    set-face global Information "%opt{yellow},%opt{gray}"
-    set-face global Error "%opt{black},%opt{red}"
-    set-face global StatusLine "%opt{white},%opt{black}"
-    set-face global StatusLineMode "%opt{black},%opt{green}"
-    set-face global StatusLineInfo "%opt{purple},%opt{black}"
-    set-face global StatusLineValue "%opt{orange},%opt{black}"
-    set-face global StatusCursor "%opt{white},%opt{blue}"
-    set-face global Prompt "%opt{black},%opt{green}"
-    set-face global MatchingChar "%opt{black},%opt{blue}"
-    set-face global Whitespace "%opt{gray},%opt{black}+f"
-    set-face global WrapMarker Whitespace
-    set-face global BufferPadding "%opt{gray},%opt{black}"
-  '';
-
   # CoC is configured using its own configuratio file
   xdg.configFile."nvim/coc-settings.json".text = ''
     {
       "rust-analyzer.server.path": "${pkgs.rust-analyzer}/bin/rust-analyzer",
 
       "languageserver": {
+        "nix": {
+          "command": "rnix-lsp",
+          "filetypes": [
+            "nix"
+          ]
+        },
+
         "haskell": {
           "command": "haskell-language-server-wrapper",
           "args": [
