@@ -59,10 +59,13 @@ in
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
+    aerc # Email client
+    # SPELLING
     aspell
     aspellDicts.en
     aspellDicts.nl
     aspellDicts.sv
+
     betterdiscordctl # Manage Better discord, allows setting custom themes, like dracula
     cabal-install # Haskell project tool
     cmus # Music
@@ -515,6 +518,10 @@ in
             "${modifier}+j" = "focus down";
             "${modifier}+k" = "focus right";
             "${modifier}+l" = "focus right";
+            "${modifier}+Shift+h" = "move left";
+            "${modifier}+Shift+j" = "move down";
+            "${modifier}+Shift+k" = "move right";
+            "${modifier}+Shift+l" = "move right";
             "${modifier}+Shift+s" =
               "exec --no-startup-id maim --select | xclip -selection clipboard -t image/png";
           };
