@@ -355,7 +355,12 @@ in
           '';
         }
         coc-rust-analyzer
-        fzf-vim
+        {
+          plugin = fzf-vim;
+          config = ''
+            nmap <c-_> :Rg <CR>
+          '';
+        }
       ];
       extraConfig = ''
         set cc=120
