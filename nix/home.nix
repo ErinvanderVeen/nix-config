@@ -86,8 +86,10 @@ in
     lutris # Non-steam games
     maim # To create screenshots
     minecraft
+    myxer # alternative to pavucontrol
     nix-index # Allow searching for files in nixpkgs
     nodejs-slim # Needed for coc
+    obs-studio # streaming, recording and virtual camera
     powerline-fonts # for powerline-go
     qtpass # pass gui
     ripgrep # used for fzf, general replacement for grep
@@ -194,12 +196,15 @@ in
             interval = 1;
             format = "{1m}";
           }
-          { block = "sound"; }
+          {
+            block = "sound";
+            on_click = "myxer";
+          }
           {
             block = "time";
             interval = 60;
             format = "%A %d/%m %R";
-            locale = "se_NO";
+            locale = "sv_SE";
           }
         ];
       };
@@ -294,7 +299,7 @@ in
         grep = "grep --color";
         cls = "grep -rn --include '*.dcl' --include '*.icl'";
         vfzf = "vim $(fzf)";
-        kfzf = "kak $(fzf)";
+        debian = "sudo systemd-nspawn -D ~/Debian/";
       };
     };
 
@@ -531,6 +536,9 @@ in
               "exec --no-startup-id maim --select | xclip -selection clipboard -t image/png";
           };
     };
+    extraConfig = ''
+      for_window [class="Myxer" instance="myxer"] move position mouse
+    '';
   };
 
   xsession.pointerCursor = {
