@@ -489,7 +489,10 @@ in
         border = 0;
         titlebar = false;
       };
-      focus.mouseWarping = false;
+      focus = {
+        mouseWarping = false;
+        followMouse = false;
+      };
       menu = ''
         "${pkgs.rofi}/bin/rofi -modi window,drun,ssh,combi -show combi -font \\"Ubuntu 12\\" -icon-theme \\"Paper\\" -show-icons"'';
       modifier = "Mod4";
