@@ -56,10 +56,23 @@ let
 
 in
 {
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+
+    overlays = [
+      (
+        import (
+          builtins.fetchTarball {
+            url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+          }
+        )
+      )
+    ];
+  };
 
   home.packages = with pkgs; [
     aerc # Email client
+
     # SPELLING
     aspell
     aspellDicts.en
@@ -69,7 +82,7 @@ in
     betterdiscordctl # Manage Better discord, allows setting custom themes, like dracula
     cabal-install # Haskell project tool
     cmus # Music
-    discord
+    discord # UNFREE
     dtrx # Extract any archive
     evince # pdf viewer
     exa # ls alternative
@@ -83,9 +96,9 @@ in
     hlint # Haskell linter
     krita # for digital art
     libreoffice-fresh # Office package
-    lutris # Non-steam games
+    lutris # Non-steam games and windows games
     maim # To create screenshots
-    minecraft
+    minecraft # UNFREE
     myxer # alternative to pavucontrol
     nix-index # Allow searching for files in nixpkgs
     nodejs-slim # Needed for coc
@@ -95,7 +108,7 @@ in
     ripgrep # used for fzf, general replacement for grep
     rnix-lsp # nix language server
     rustfmt # Formatter for rust
-    skype
+    skype # UNFREE (Needed for work)
     translate-shell # translate sentences in the terminal
     trash-cli # Alternative to rm that moves to trash
     watson # cli time tracker
@@ -317,6 +330,7 @@ in
 
     neovim = {
       enable = true;
+      package = pkgs.neovim-nightly;
       withPython3 = true;
       withNodeJs = true;
       plugins = with pkgs.vimPlugins // custom-vim-plugins; [
