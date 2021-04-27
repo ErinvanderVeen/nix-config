@@ -332,12 +332,14 @@ in
     neovim = {
       enable = true;
       package = pkgs.neovim-nightly;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
       withPython3 = true;
       withNodeJs = true;
       plugins = with pkgs.vimPlugins // custom-vim-plugins; [
         airline
         haskell-vim
-        idris2-vim
         vim-clean
         vim-css-color
         vim-gitgutter
@@ -359,28 +361,58 @@ in
           '';
         }
         {
-          plugin = coc-nvim;
-          config = ''
-            nmap <silent> [g <Plug>(coc-diagnostic-prev)
-            nmap <silent> ]g <Plug>(coc-diagnostic-next)
-            nmap <silent> gd <Plug>(coc-definition)
-            nmap <silent> gy <Plug>(coc-type-definition)
-            nmap <silent> gi <Plug>(coc-implementation)
-            nmap <silent> gr <Plug>(coc-references)
-            nmap <leader>ac  <Plug>(coc-codeaction)
-            nmap <leader>qf  <Plug>(coc-fix-current)
-            nmap <leader>rn  <Plug>(coc-rename)
-            nmap <leader>f   <Plug>(coc-format)
-            hi CocFloating ctermbg=0
-          '';
-        }
-        coc-rust-analyzer
-        {
           plugin = fzf-vim;
           config = ''
             nmap <c-_> :Rg <CR>
           '';
         }
+        lsp_extensions-nvim
+        {
+          plugin = nvim-lspconfig;
+          config = ''
+            nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+            nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+            nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+            nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+            nnoremap <silent> ga <cmd>lua vim.lsp.buf.code_action()<CR>
+            nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+            nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+            nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+            nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+            " auto-format
+            autocmd BufWritePre *.nix lua vim.lsp.buf.formatting_sync(nil, 100)
+            " lsp servers
+            lua << EOF
+              local nvim_lsp = require'lspconfig'
+              -- function to attach completion when setting up lsp
+              local on_attach = function(client)
+                  require'completion'.on_attach(client)
+              end
+              -- Language servers
+              nvim_lsp.rnix.setup{}
+              nvim_lsp.rust_analyzer.setup{}
+              -- Enable diagnostics
+              vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+                vim.lsp.diagnostic.on_publish_diagnostics, {
+                  virtual_text = true,
+                  signs = true,
+                  update_in_insert = true,
+                }
+              )
+            EOF
+            autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
+            \ lua require'lsp_extensions'.inlay_hints{ prefix = "■ ", highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
+          '';
+        }
+        {
+          plugin = completion-nvim;
+          config = ''
+            autocmd BufEnter * lua require'completion'.on_attach()
+            let g:completion_enable_snippet = 'vim-vsnip'
+          '';
+        }
+        vim-vsnip
+        vim-vsnip-integ
       ];
       extraConfig = ''
         set cc=120
@@ -400,6 +432,7 @@ in
           \ if line("'\"") > 0 && line("'\"") <= line("$") |
           \   exe "normal! g`\"" |
           \ endif
+        set completeopt=menuone,noinsert,noselect
       '';
       extraPackages = with pkgs; [ rust-analyzer ];
     };
@@ -466,7 +499,9 @@ in
         "ctrl+shift+h" = "previous_tab";
       };
       extraConfig = ''
-        enabled_layouts tall:bias=70;full_size=1;mirrored=false
+        enabled_layouts tall:bias=70;
+        full_size = 1;
+        mirrored = false
       '';
     };
 
@@ -509,7 +544,7 @@ in
         followMouse = false;
       };
       menu = ''
-        "${pkgs.rofi}/bin/rofi -modi window,drun,ssh,combi -show combi -font \\"Ubuntu 12\\" -icon-theme \\"Paper\\" -show-icons"'';
+        "${pkgs.rofi}/bin/rofi -modi window,drun,ssh,combi -show combi -font \\" Ubuntu 12\\" -icon-theme \\" Paper\\" -show-icons" '';
       modifier = "Mod4";
       bars = [
         {
@@ -555,7 +590,7 @@ in
           };
     };
     extraConfig = ''
-      for_window [class="Myxer" instance="myxer"] move position mouse
+      for_window [ class="Myxer" instance="myxer" ] move position mouse
     '';
   };
 
@@ -629,48 +664,4 @@ in
       };
     };
   };
-
-  # CoC is configured using its own configuratio file
-  xdg.configFile."nvim/coc-settings.json".text = ''
-    {
-      "rust-analyzer.server.path": "${pkgs.rust-analyzer}/bin/rust-analyzer",
-
-      "languageserver": {
-        "nix": {
-          "command": "rnix-lsp",
-          "filetypes": [
-            "nix"
-          ]
-        },
-
-        "haskell": {
-          "command": "haskell-language-server-wrapper",
-          "args": [
-            "--lsp"
-          ],
-          "rootPatterns": [
-            "*.cabal",
-            ".stack.yaml",
-            ".hie-bios",
-            "BUILD.bazel",
-            "cabal.config",
-            "package.yaml"
-          ],
-          "filetypes": [
-            "hs",
-            "lhs",
-            "haskell"
-          ],
-          "initializationOptions": {
-            "languageServerHaskell": {
-              "hlintOn": true,
-              "maxNumberOfProblems": 10,
-              "completionSnippetsOn": true
-            }
-          }
-        }
-      }
-
-    }
-  '';
 }
