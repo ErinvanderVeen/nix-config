@@ -96,6 +96,7 @@ in
     hlint # Haskell linter
     krita # for digital art
     libreoffice-fresh # Office package
+    lua # needed for neovim
     lutris # Non-steam games and windows games
     maim # To create screenshots
     minecraft # UNFREE
@@ -385,7 +386,7 @@ in
         set cc=120
         set clipboard=unnamedplus
         set dir=~/.swp
-        set listchars=nbsp:¬,tab:❥\ ,extends:»,precedes:«,trail:•
+        set listchars=nbsp:¬,tab:→\ ,extends:»,precedes:«,trail:·,space:·
         set list
         set mouse=a
         set nu rnu
