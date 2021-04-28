@@ -338,13 +338,25 @@ in
       withPython3 = true;
       withNodeJs = true;
       plugins = with pkgs.vimPlugins // custom-vim-plugins; [
-        airline
+        {
+          plugin = airline;
+          config = ''
+            let g:airline#extensions#tabline#enabled = 1
+          '';
+        }
         haskell-vim
         vim-clean
         vim-css-color
-        vim-gitgutter
+        {
+          plugin = gitsigns-nvim; # Git information in vim
+          config = ''
+            lua require('gitsigns').setup()
+          '';
+        }
+        plenary-nvim # Depedency of gitsigns
         vim-nix
         vim-toml
+        vim-highlightedyank
         {
           plugin = dracula-vim;
           config = ''
@@ -433,6 +445,7 @@ in
           \   exe "normal! g`\"" |
           \ endif
         set completeopt=menuone,noinsert,noselect
+        autocmd BufEnter * set title
       '';
       extraPackages = with pkgs; [ rust-analyzer ];
     };
@@ -483,7 +496,6 @@ in
         mark1_foreground = "${mark1_foreground}";
         mark1_background = "${mark1_background}";
         font_size = "14";
-        window_padding_width = "20";
         allow_remote_control = true;
       };
       keybindings = {
