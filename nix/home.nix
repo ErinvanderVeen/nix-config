@@ -102,6 +102,7 @@ in
     minecraft # UNFREE
     myxer # alternative to pavucontrol
     nix-index # Allow searching for files in nixpkgs
+    nvimpager # Use NVIM as a pager (man, less, etc)
     nodejs-slim # Needed for coc
     obs-studio # streaming, recording and virtual camera
     powerline-fonts # for powerline-go
@@ -121,6 +122,7 @@ in
     EDITOR = "nvim";
     CLEAN_HOME = "/home/erin/clean";
     PATH = "$PATH:$CLEAN_HOME/bin:$CLEAN_HOME/lib/exe";
+    PAGER = "nvimpager";
   };
 
   home.keyboard = null;
@@ -403,6 +405,7 @@ in
               -- Language servers
               nvim_lsp.rnix.setup{}
               nvim_lsp.rust_analyzer.setup{}
+              nvim_lsp.hls.setup{}
               -- Enable diagnostics
               vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
                 vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -423,8 +426,8 @@ in
             let g:completion_enable_snippet = 'vim-vsnip'
           '';
         }
-        vim-vsnip
-        vim-vsnip-integ
+        vim-vsnip # Snippet plugin
+        vim-vsnip-integ # LSP Support for snippets
       ];
       extraConfig = ''
         set cc=120
