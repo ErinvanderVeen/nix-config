@@ -107,6 +107,7 @@ in
     obs-studio # streaming, recording and virtual camera
     powerline-fonts # for powerline-go
     qtpass # pass gui
+    ranger # Terminal fm
     ripgrep # used for fzf, general replacement for grep
     rnix-lsp # nix language server
     rustfmt # Formatter for rust
@@ -264,6 +265,10 @@ in
       userEmail = "erin@erinvanderveen.nl";
       userName = "Erin van der Veen";
       delta.enable = true;
+      ignores = [
+        "*~"
+        ".tags"
+      ];
       extraConfig = {
         init.defaultBranch = "main";
         merge.tool = "nvimdiff";
@@ -314,8 +319,11 @@ in
         upgrade = "sudo nixos-rebuild switch && home-manager switch";
         grep = "grep --color";
         cls = "grep -rn --include '*.dcl' --include '*.icl'";
-        vfzf = "vim $(fzf)";
+        vfzf = "vim \"$(fzf)\"";
         debian = "sudo systemd-nspawn -D ~/Debian/";
+        r = "ranger";
+        clean-tags = "steam-run cloogletags -a -c -d ~/clean/lib -o ~/clean/lib/tags";
+        project-tags = "steam-run cloogletags -a -c -d . -o .tags";
       };
     };
 
@@ -347,7 +355,12 @@ in
           '';
         }
         haskell-vim
-        vim-clean
+        {
+          plugin = vim-clean;
+          config = ''
+            autocmd BufEnter *.icl,*.dcl set tags=~/clean/lib/tags,.tags
+          '';
+        }
         vim-css-color
         {
           plugin = gitsigns-nvim; # Git information in vim
