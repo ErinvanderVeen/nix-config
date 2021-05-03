@@ -79,7 +79,6 @@ in
     aspellDicts.nl
     aspellDicts.sv
 
-    betterdiscordctl # Manage Better discord, allows setting custom themes, like dracula
     cabal-install # Haskell project tool
     cmus # Music
     discord # UNFREE
@@ -264,7 +263,6 @@ in
       lfs.enable = true;
       userEmail = "erin@erinvanderveen.nl";
       userName = "Erin van der Veen";
-      delta.enable = true;
       ignores = [
         "*~"
         ".tags"
