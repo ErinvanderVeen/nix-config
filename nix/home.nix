@@ -93,6 +93,7 @@ in
     gnupg
     haskell-language-server # Haskell language server
     hlint # Haskell linter
+    keepassx2 # Keepass
     krita # for digital art
     libreoffice-fresh # Office package
     lua # needed for neovim
@@ -258,6 +259,8 @@ in
       };
     };
 
+    lazygit.enable = true;
+
     git = {
       enable = true;
       lfs.enable = true;
@@ -308,20 +311,22 @@ in
         set -o vi
       '';
       shellAliases = {
+        clean-tags = "steam-run cloogletags -a -c -d ~/clean/lib -o ~/clean/lib/tags";
+        cls = "grep -rn --include '*.dcl' --include '*.icl'";
+        con = "home-manager edit";
+        debian = "sudo systemd-nspawn -D ~/Debian/";
+        grep = "grep --color";
         icat = "kitty +kitten icat";
         la = "exa -al --git";
+        lg = "lazygit";
         ll = "exa -l --git";
         ls = "exa";
-        con = "home-manager edit";
+        project-tags = "steam-run cloogletags -a -c -d . -o .tags";
+        r = "ranger";
+        ssh = "kitty +kitten ssh";
         update = "sudo nix-channel --update";
         upgrade = "sudo nixos-rebuild switch && home-manager switch";
-        grep = "grep --color";
-        cls = "grep -rn --include '*.dcl' --include '*.icl'";
         vfzf = "vim \"$(fzf)\"";
-        debian = "sudo systemd-nspawn -D ~/Debian/";
-        r = "ranger";
-        clean-tags = "steam-run cloogletags -a -c -d ~/clean/lib -o ~/clean/lib/tags";
-        project-tags = "steam-run cloogletags -a -c -d . -o .tags";
       };
     };
 
@@ -329,12 +334,6 @@ in
 
     firefox = {
       enable = true;
-      profiles = {
-        myprofile = {
-          isDefault = true;
-          settings = { "general.smoothScroll" = false; };
-        };
-      };
     };
 
     neovim = {
@@ -479,8 +478,8 @@ in
 
     kitty = {
       enable = true;
-      font.name = "Ubuntu Mono";
-      font.package = pkgs.ubuntu_font_family;
+      font.name = "Noto Sans Mono";
+      font.package = pkgs.noto-fonts;
       settings = {
         foreground = "${foreground}";
         background = "${background}";
@@ -570,7 +569,7 @@ in
         followMouse = false;
       };
       menu = ''
-        "${pkgs.rofi}/bin/rofi -modi window,drun,ssh,combi -show combi -font \\" Ubuntu 12\\" -icon-theme \\" Paper\\" -show-icons" '';
+        "${pkgs.rofi}/bin/rofi -modi window,drun,ssh,combi -show combi -font \\" Noto Sans 12\\" -icon-theme \\" Paper\\" -show-icons" '';
       modifier = "Mod4";
       bars = [
         {
@@ -592,7 +591,7 @@ in
               text = "${foreground}";
             };
           };
-          fonts = [ "FontAwesome" "Ubuntu" ];
+          fonts = { names = [ "FontAwesome" "Noto Sans" ]; size = 14.0; };
           statusCommand =
             "i3status-rs ~/.config/i3status-rust/config-default.toml";
         }
@@ -652,7 +651,7 @@ in
           alignment = "center";
           bounce_freq = 0;
           corner_radius = 6;
-          font = "Ubuntu";
+          font = "Noto Sans";
           format = "<b>%s</b>\\n%b";
           geometry = "350x5-25+25";
           horizontal_padding = 8;
