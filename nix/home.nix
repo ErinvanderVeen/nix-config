@@ -414,7 +414,16 @@ in
               end
               -- Language servers
               nvim_lsp.rnix.setup{}
-              nvim_lsp.rust_analyzer.setup{}
+              nvim_lsp.rust_analyzer.setup {
+                settings = {
+                  ["rust-analyzer"] = {
+                    ["checkOnSave"] = {
+                      ["enabled"] = true,
+                        ["command"] = "clippy",
+                    },
+                  },
+                },
+              }
               nvim_lsp.hls.setup{}
               -- Enable diagnostics
               vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
