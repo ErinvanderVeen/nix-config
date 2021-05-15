@@ -70,63 +70,61 @@ in
     ];
   };
 
-  home.packages = with pkgs; [
-    aerc # Email client
+  home = {
+    packages = with pkgs; [
+      # SPELLING
+      aspell
+      aspellDicts.en
+      aspellDicts.nl
+      aspellDicts.sv
 
-    # SPELLING
-    aspell
-    aspellDicts.en
-    aspellDicts.nl
-    aspellDicts.sv
-
-    cabal-install # Haskell project tool
-    cmus # Music
-    discord # UNFREE
-    dtrx # Extract any archive
-    evince # pdf viewer
-    exa # ls alternative
-    fd # find alternative
-    font-awesome # for i3-status-rs
-    ghc # Haskell compiler
-    glab # CLI for GitLab
-    gnome-mpv # video player
-    gnupg
-    haskell-language-server # Haskell language server
-    hlint # Haskell linter
-    keepassx2 # Keepass
-    krita # for digital art
-    libreoffice-fresh # Office package
-    lua # needed for neovim
-    lutris # Non-steam games and windows games
-    maim # To create screenshots
-    minecraft # UNFREE
-    myxer # alternative to pavucontrol
-    nix-index # Allow searching for files in nixpkgs
-    nvimpager # Use NVIM as a pager (man, less, etc)
-    nodejs-slim # Needed for coc
-    obs-studio # streaming, recording and virtual camera
-    powerline-fonts # for powerline-go
-    qtpass # pass gui
-    ranger # Terminal fm
-    ripgrep # used for fzf, general replacement for grep
-    rnix-lsp # nix language server
-    rustfmt # Formatter for rust
-    skype # UNFREE (Needed for work)
-    translate-shell # translate sentences in the terminal
-    trash-cli # Alternative to rm that moves to trash
-    watson # cli time tracker
-    xclip # to copy screenshots to clipboard
-    youtube-dl # download youtube videos
-  ];
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    CLEAN_HOME = "/home/erin/clean";
-    PATH = "$PATH:$CLEAN_HOME/bin:$CLEAN_HOME/lib/exe";
-    PAGER = "nvimpager";
+      cabal-install # Haskell project tool
+      cmus # Music
+      discord # UNFREE
+      evince # pdf viewer
+      fd # find alternative
+      font-awesome # for i3-status-rs
+      ghc # Haskell compiler
+      glab # CLI for GitLab
+      gnome-mpv # video player
+      gnome.eog # Image viewer
+      gnome.libsecret # lookup secret
+      gnupg
+      hlint # Haskell linter
+      keepassx2 # Keepass
+      krita # for digital art
+      libnotify # for notify-send
+      libreoffice-fresh # Office package
+      lutris # Non-steam games and windows games
+      maim # To create screenshots
+      minecraft # UNFREE
+      myxer # alternative to pavucontrol
+      nix-index # Allow searching for files in nixpkgs
+      nvimpager # Use NVIM as a pager (man, less, etc)
+      nodejs-slim # Needed for coc
+      obs-studio # streaming, recording and virtual camera
+      oh-my-zsh # plugins for zsh
+      powerline-fonts # for powerline-go
+      qtpass # pass gui
+      ranger # Terminal fm
+      ripgrep # used for fzf, general replacement for grep
+      rustfmt # Formatter for rust
+      skype # UNFREE (Needed for work)
+      translate-shell # translate sentences in the terminal
+      trash-cli # Alternative to rm that moves to trash
+      watson # cli time tracker
+      xclip # to copy screenshots to clipboard
+      youtube-dl # download youtube videos
+      zsh-prezto # zsh
+    ];
+    sessionVariables = {
+      EDITOR = "nvim";
+      CLEAN_HOME = "/home/erin/clean";
+      PATH = "$PATH:$CLEAN_HOME/bin:$CLEAN_HOME/lib/exe";
+      PAGER = "nvimpager";
+    };
+    keyboard = null;
   };
-
-  home.keyboard = null;
 
   fonts.fontconfig.enable = true;
 
@@ -142,7 +140,102 @@ in
     };
   };
 
+  accounts.email = {
+    accounts = {
+      personal = {
+        address = "erin@erinvanderveen.nl";
+        imap = {
+          host = "imap.transip.email";
+          port = 993;
+          tls.enable = true;
+        };
+        neomutt = {
+          enable = true;
+        };
+        msmtp.enable = true;
+        imapnotify = {
+          enable = true;
+          boxes = [
+            "Inbox"
+          ];
+          onNotify = "${pkgs.isync}/bin/mbsync -a";
+          onNotifyPost = "${pkgs.libnotify}/bin/notify-send 'New mail arrived'";
+        };
+        mbsync = {
+          enable = true;
+          create = "maildir";
+        };
+        passwordCommand = "${pkgs.gnome.libsecret}/bin/secret-tool lookup personal-email password";
+        primary = true;
+        realName = "Erin van der Veen";
+        smtp = {
+          host = "smtp.transip.email";
+          port = 465;
+          tls.enable = true;
+        };
+        userName = "erin@erinvanderveen.nl";
+      };
+    };
+  };
+
   programs = {
+    autorandr = {
+      enable = true;
+      profiles = {
+        pc = {
+          fingerprint = {
+            HDMI-0 =
+              "00ffffffffffff001e6d205a0bb406000c18010380331d78ea6275a3554fa027125054210800714081c08100818095009040a9c0b300023a801871382d40582c4500fe221100001e000000fd00383d1e530f000a202020202020000000fc0032344d5035350a202020202020000000ff000a20202020202020202020202001ae02031df14a900403011412051f1013230907078301000065030c001000023a801871382d40582c4500fe221100001e011d8018711c1620582c2500fe221100009e011d007251d01e206e285500fe221100001e8c0ad08a20e02d10103e9600fe22110000180000000000000000000000000000000000000000000000000000e6";
+            HDMI-1 =
+              "00ffffffffffff001e6d205adeb306000c18010380331d78ea6275a3554fa027125054210800714081c08100818095009040a9c0b300023a801871382d40582c4500fe221100001e000000fd00383d1e530f000a202020202020000000fc0032344d5035350a202020202020000000ff000a20202020202020202020202001dc02031df14a900403011412051f1013230907078301000065030c001000023a801871382d40582c4500fe221100001e011d8018711c1620582c2500fe221100009e011d007251d01e206e285500fe221100001e8c0ad08a20e02d10103e9600fe22110000180000000000000000000000000000000000000000000000000000e6";
+          };
+          config = {
+            HDMI-0 = {
+              enable = true;
+              primary = true;
+              position = "0x0";
+              mode = "1920x1080";
+              rate = "60";
+            };
+            HDMI-1 = {
+              enable = true;
+              primary = false;
+              position = "1920x0";
+              mode = "1920x1080";
+              rate = "60";
+            };
+          };
+        };
+      };
+    };
+
+    feh.enable = true;
+
+    firefox = {
+      enable = true;
+    };
+
+    fzf = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+
+    git = {
+      enable = true;
+      lfs.enable = true;
+      userEmail = "erin@erinvanderveen.nl";
+      userName = "Erin van der Veen";
+      ignores = [
+        "*~"
+        ".tags"
+      ];
+      extraConfig = {
+        init.defaultBranch = "main";
+        merge.tool = "nvimdiff";
+        pull.rebase = "false";
+      };
+    };
+
     home-manager = {
       enable = true;
       path = "…";
@@ -152,11 +245,6 @@ in
       enable = true;
       showProgramPath = false;
       highlightBaseName = true;
-    };
-
-    fzf = {
-      enable = true;
-      enableBashIntegration = true;
     };
 
     i3status-rust = {
@@ -227,112 +315,67 @@ in
       };
     };
 
-    autorandr = {
+    kitty = {
       enable = true;
-
-      profiles = {
-        pc = {
-          fingerprint = {
-            HDMI-0 =
-              "00ffffffffffff001e6d205a0bb406000c18010380331d78ea6275a3554fa027125054210800714081c08100818095009040a9c0b300023a801871382d40582c4500fe221100001e000000fd00383d1e530f000a202020202020000000fc0032344d5035350a202020202020000000ff000a20202020202020202020202001ae02031df14a900403011412051f1013230907078301000065030c001000023a801871382d40582c4500fe221100001e011d8018711c1620582c2500fe221100009e011d007251d01e206e285500fe221100001e8c0ad08a20e02d10103e9600fe22110000180000000000000000000000000000000000000000000000000000e6";
-
-            HDMI-1 =
-              "00ffffffffffff001e6d205adeb306000c18010380331d78ea6275a3554fa027125054210800714081c08100818095009040a9c0b300023a801871382d40582c4500fe221100001e000000fd00383d1e530f000a202020202020000000fc0032344d5035350a202020202020000000ff000a20202020202020202020202001dc02031df14a900403011412051f1013230907078301000065030c001000023a801871382d40582c4500fe221100001e011d8018711c1620582c2500fe221100009e011d007251d01e206e285500fe221100001e8c0ad08a20e02d10103e9600fe22110000180000000000000000000000000000000000000000000000000000e6";
-          };
-          config = {
-            HDMI-0 = {
-              enable = true;
-              primary = true;
-              position = "0x0";
-              mode = "1920x1080";
-              rate = "60";
-            };
-            HDMI-1 = {
-              enable = true;
-              primary = false;
-              position = "1920x0";
-              mode = "1920x1080";
-              rate = "60";
-            };
-          };
-        };
+      font.name = "Noto Sans Mono";
+      font.package = pkgs.noto-fonts;
+      settings = {
+        foreground = "${foreground}";
+        background = "${background}";
+        selection_foreground = "${selection_foreground}";
+        selection_background = "${selection_background}";
+        url_color = "${url_color}";
+        color0 = "${color0}";
+        color8 = "${color8}";
+        color1 = "${color1}";
+        color9 = "${color9}";
+        color2 = "${color2}";
+        color10 = "${color10}";
+        color3 = "${color3}";
+        color11 = "${color11}";
+        color4 = "${color4}";
+        color12 = "${color12}";
+        color5 = "${color5}";
+        color13 = "${color13}";
+        color6 = "${color6}";
+        color14 = "${color14}";
+        color7 = "${color7}";
+        color15 = "${color15}";
+        cursor = "${cursor}";
+        cursor_text_color = "${background}";
+        active_tab_foreground = "${active_tab_foreground}";
+        active_tab_background = "${active_tab_background}";
+        mark1_foreground = "${mark1_foreground}";
+        mark1_background = "${mark1_background}";
+        font_size = "14";
+        allow_remote_control = true;
       };
+      keybindings = {
+        "ctrl+shift+n" = "new_os_window_with_cwd";
+        "ctrl+shift+t" = "new_tab_with_cwd";
+        "ctrl+shift+enter" = "new_window_with_cwd";
+        # Windows
+        "ctrl+h" = "neighboring_window left";
+        "ctrl+l" = "neighboring_window right";
+        "ctrl+k" = "neighboring_window up";
+        "ctrl+j" = "neighboring_window down";
+        "ctrl+shift+l" = "next_tab";
+        "ctrl+shift+h" = "previous_tab";
+      };
+      extraConfig = ''
+        enabled_layouts tall:bias=70;
+        full_size = 1;
+        mirrored = false
+      '';
     };
 
     lazygit.enable = true;
 
-    git = {
-      enable = true;
-      lfs.enable = true;
-      userEmail = "erin@erinvanderveen.nl";
-      userName = "Erin van der Veen";
-      ignores = [
-        "*~"
-        ".tags"
-      ];
-      extraConfig = {
-        init.defaultBranch = "main";
-        merge.tool = "nvimdiff";
-        pull.rebase = "false";
-      };
-    };
+    mbsync.enable = true;
 
-    password-store = {
-      enable = true;
-      settings = { PASSWORD_STORE_DIR = "Nextcloud/Passwords"; };
-    };
+    msmtp.enable = true;
 
-    browserpass = {
-      enable = true;
-      browsers = [ "firefox" ];
-    };
-
-    powerline-go = {
-      enable = true;
-      modules = [ "host" "ssh" "cwd" "gitlite" "nix-shell" ];
-    };
-
-    bash = {
-      enable = true;
-      enableVteIntegration = true;
-      shellOptions = [
-        "histappend"
-        "checkwinsize"
-        "extglob"
-        "globstar"
-        "checkjobs"
-        "autocd"
-        "dirspell"
-      ];
-      initExtra = ''
-        function cd {
-          builtin cd "$@" && exa -l
-        }
-        set -o vi
-      '';
-      shellAliases = {
-        clean-tags = "steam-run cloogletags -a -c -d ~/clean/lib -o ~/clean/lib/tags";
-        cls = "grep -rn --include '*.dcl' --include '*.icl'";
-        con = "home-manager edit";
-        debian = "sudo systemd-nspawn -D ~/Debian/";
-        grep = "grep --color";
-        icat = "kitty +kitten icat";
-        la = "exa -al --git";
-        lg = "lazygit";
-        ll = "exa -l --git";
-        ls = "exa";
-        project-tags = "steam-run cloogletags -a -c -d . -o .tags";
-        r = "ranger";
-        ssh = "kitty +kitten ssh";
-        update = "sudo nix-channel --update";
-        upgrade = "sudo nixos-rebuild switch && home-manager switch";
-        vfzf = "vim \"$(fzf)\"";
-      };
-    };
-
-    feh.enable = true;
-
-    firefox = {
+    neomutt = {
       enable = true;
     };
 
@@ -425,6 +468,7 @@ in
                 },
               }
               nvim_lsp.hls.setup{}
+              nvim_lsp.yamlls.setup{}
               -- Enable diagnostics
               vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
                 vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -468,75 +512,15 @@ in
           \ endif
         set completeopt=menuone,noinsert,noselect
         autocmd BufEnter * set title
+        nnoremap <leader><space> :noh<CR>
       '';
-      extraPackages = with pkgs; [ rust-analyzer ];
-    };
-
-    #ssh = {
-    #  enable = true;
-    #  matchBlocks = [
-    #      "cleanbuild" = {
-    #	      hostname = "cleanbuild.cs.ru.nl";
-    #	      user = "erin";
-    #	      identityFile = "~/.ssh/buildserver";
-    #	      localforward
-    #      }
-    #  ];
-
-    #};
-
-    kitty = {
-      enable = true;
-      font.name = "Noto Sans Mono";
-      font.package = pkgs.noto-fonts;
-      settings = {
-        foreground = "${foreground}";
-        background = "${background}";
-        selection_foreground = "${selection_foreground}";
-        selection_background = "${selection_background}";
-        url_color = "${url_color}";
-        color0 = "${color0}";
-        color8 = "${color8}";
-        color1 = "${color1}";
-        color9 = "${color9}";
-        color2 = "${color2}";
-        color10 = "${color10}";
-        color3 = "${color3}";
-        color11 = "${color11}";
-        color4 = "${color4}";
-        color12 = "${color12}";
-        color5 = "${color5}";
-        color13 = "${color13}";
-        color6 = "${color6}";
-        color14 = "${color14}";
-        color7 = "${color7}";
-        color15 = "${color15}";
-        cursor = "${cursor}";
-        cursor_text_color = "${background}";
-        active_tab_foreground = "${active_tab_foreground}";
-        active_tab_background = "${active_tab_background}";
-        mark1_foreground = "${mark1_foreground}";
-        mark1_background = "${mark1_background}";
-        font_size = "14";
-        allow_remote_control = true;
-      };
-      keybindings = {
-        "ctrl+shift+n" = "new_os_window_with_cwd";
-        "ctrl+shift+t" = "new_tab_with_cwd";
-        "ctrl+shift+enter" = "new_window_with_cwd";
-        # Windows
-        "ctrl+h" = "neighboring_window left";
-        "ctrl+l" = "neighboring_window right";
-        "ctrl+k" = "neighboring_window up";
-        "ctrl+j" = "neighboring_window down";
-        "ctrl+shift+l" = "next_tab";
-        "ctrl+shift+h" = "previous_tab";
-      };
-      extraConfig = ''
-        enabled_layouts tall:bias=70;
-        full_size = 1;
-        mirrored = false
-      '';
+      extraPackages = with pkgs; [
+        haskell-language-server
+        rnix-lsp # nix language server
+        yaml-language-server
+        nixfmt
+        lua # Required for certain plugins
+      ];
     };
 
     rofi = {
@@ -548,7 +532,6 @@ in
           border = "${color11}";
           separator = "${color11}";
         };
-
         rows = {
           normal = {
             background = "${background}";
@@ -560,6 +543,116 @@ in
             };
           };
         };
+      };
+    };
+
+    ssh = {
+      enable = true;
+      matchBlocks = {
+        "top-001" = {
+          hostname = "top-001.tilla.cloud";
+          user = "erin";
+          identityFile = "~/.ssh/top-001";
+          port = 22;
+        };
+        "cleanbuild" = {
+          hostname = "cleanbuild.cs.ru.nl";
+          user = "erin";
+          identityFile = "~/.ssh/buildserver";
+          port = 22;
+          localForwards = [
+            {
+              bind.port = 8081;
+              host = {
+                address = "localhost";
+                port = 8080;
+              };
+            }
+          ];
+        };
+        "cleanbuild-macos" = {
+          proxyCommand = "ssh cleanbuild nc 10.10.0.11 22";
+          user = "build";
+        };
+        "cleanbuild-linux-arm32" = {
+          proxyCommand = "ssh cleanbuild nc 10.10.0.12 22";
+          user = "build";
+        };
+        "cleanbuild-linux-arm64" = {
+          proxyCommand = "ssh cleanbuild nc 10.10.0.20 22";
+          user = "build";
+        };
+        "cleanbuild-linux-x64" = {
+          proxyCommand = "ssh cleanbuild nc 10.10.0.13 22";
+          user = "build";
+        };
+        "cleanbuild-linux-x86" = {
+          proxyCommand = "ssh cleanbuild nc 10.10.0.14 22";
+          user = "build";
+        };
+      };
+    };
+
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      enableVteIntegration = true;
+      autocd = true;
+      defaultKeymap = "viins";
+      history = {
+        expireDuplicatesFirst = true;
+      };
+      prezto = {
+        enable = false;
+        editor = {
+          dotExpansion = true;
+          keymap = "vi";
+          promptContext = true;
+        };
+        terminal = {
+          autoTitle = true;
+        };
+        syntaxHighlighting = {
+          highlighters = [
+            "main"
+            "brackets"
+            "pattern"
+            "line"
+            "cursor"
+            "root"
+          ];
+        };
+      };
+      oh-my-zsh = {
+        enable = false;
+        plugins = [
+          "git"
+          "sudo"
+        ];
+      };
+      shellAliases = {
+        clean-tags = "steam-run cloogletags -a -c -d ~/clean/lib -o ~/clean/lib/tags";
+        cls = "grep -rn --include '*.dcl' --include '*.icl'";
+        con = "home-manager edit";
+        debian = "sudo systemd-nspawn -D ~/Debian/";
+        grep = "grep --color";
+        icat = "kitty +kitten icat";
+        la = "exa -al --git";
+        lg = "lazygit";
+        ll = "exa -l --git";
+        ls = "exa";
+        project-tags = "steam-run cloogletags -a -c -d . -o .tags";
+        r = "ranger";
+        ssh = "kitty +kitten ssh";
+        update = "sudo nix-channel --update";
+        upgrade = "sudo nixos-rebuild switch && home-manager switch";
+        vfzf = "vim \"$(fzf)\"";
       };
     };
   };
@@ -634,9 +727,9 @@ in
   };
 
   services = {
-    nextcloud-client = { enable = true; };
+    imapnotify.enable = true;
 
-    password-store-sync = { enable = true; };
+    nextcloud-client = { enable = true; };
 
     picom = {
       enable = true;
