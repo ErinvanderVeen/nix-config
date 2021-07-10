@@ -1,46 +1,46 @@
 { pkgs, lib, config, ... }:
 
 let
-  foreground = "#fafafa";
-  background = "#282A36";
-  selection_foreground = "#fafafa";
-  selection_background = "#313440";
+  foreground = "#979eab";
+  background = "#1f2329";
+  selection_foreground = "#5b6268";
+  selection_background = "#b3deef";
 
-  url_color = "#5fafff";
+  url_color = "#61afef";
 
   color0 = "#282c34";
-  color8 = "#282c34";
+  color8 = "#393e48";
 
   # White
-  color7 = "#ffffff";
-  color15 = "#ffffff";
+  color7 = "#979eab";
+  color15 = "#bbc2cf";
 
   # Red
-  color1 = "#ff6059";
-  color9 = "#ff6059";
+  color1 = "#e55561";
+  color9 = "#8b3434";
 
   # Green
-  color2 = "#5fff87";
-  color10 = "#5fff87";
+  color2 = "#8ebd6b";
+  color10 = "#5e8d6b";
 
   # Blue
-  color4 = "#5fafff";
-  color12 = "#5fafff";
+  color4 = "#4fa6ed";
+  color12 = "#0f66ad";
 
   # Yellow
-  color3 = "#ffff87";
-  color11 = "#ffff87";
+  color3 = "#e2b86b";
+  color11 = "#835d1a";
 
   # Magenta
-  color5 = "#af87ff";
-  color13 = "#af87ff";
+  color5 = "#bf68d9";
+  color13 = "#7e3992";
 
   # Cyan
-  color6 = "#5fafff";
-  color14 = "#5fafff";
+  color6 = "#48b0bd";
+  color14 = "#266269";
 
   # Cursor colors
-  cursor = "#f8f8f2";
+  cursor = "#cccccc";
 
   # Tab bar colors
   active_tab_foreground = "#282a36";
@@ -58,16 +58,6 @@ in
 {
   nixpkgs = {
     config.allowUnfree = true;
-
-    overlays = [
-      (
-        import (
-          builtins.fetchTarball {
-            url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-          }
-        )
-      )
-    ];
   };
 
   home = {
@@ -77,8 +67,8 @@ in
       aspellDicts.en
       aspellDicts.nl
       aspellDicts.sv
-
       cabal-install # Haskell project tool
+      cargo # Rust packagemanager, buildsystem, etc
       cmus # Music
       discord # UNFREE
       evince # pdf viewer
@@ -104,15 +94,15 @@ in
       nodejs-slim # Needed for coc
       obs-studio # streaming, recording and virtual camera
       oh-my-zsh # plugins for zsh
+      ormolu # Haskell formatter
       powerline-fonts # for powerline-go
-      qtpass # pass gui
-      ranger # Terminal fm
       ripgrep # used for fzf, general replacement for grep
-      rustfmt # Formatter for rust
+      rust-analyzer # Rust language server
+      signal-desktop
       skype # UNFREE (Needed for work)
+      teamspeak_client # UNFREE Needed for [OURS] raids
       translate-shell # translate sentences in the terminal
       trash-cli # Alternative to rm that moves to trash
-      watson # cli time tracker
       xclip # to copy screenshots to clipboard
       youtube-dl # download youtube videos
       zsh-prezto # zsh
@@ -209,6 +199,11 @@ in
       };
     };
 
+    exa = {
+      enable = true;
+      enableAliases = true;
+    };
+
     feh.enable = true;
 
     firefox = {
@@ -243,8 +238,10 @@ in
 
     htop = {
       enable = true;
-      showProgramPath = false;
-      highlightBaseName = true;
+      settings = {
+        show_program_path = false;
+        highlight_base_name = true;
+      };
     };
 
     i3status-rust = {
@@ -270,12 +267,6 @@ in
         };
         blocks = [
           {
-            block = "watson";
-            show_time = true;
-            state_path = "/home/erin/.config/watson/state";
-            interval = 60;
-          }
-          {
             block = "disk_space";
             path = "/";
             alias = "/";
@@ -284,13 +275,13 @@ in
             interval = 600;
             warning = 80.0;
             alert = 90.0;
-            format = " {used}/{total} {unit}";
+            format = " {used}/{total}";
           }
           {
             block = "memory";
             display_type = "memory";
-            format_mem = "{Mup}%";
-            format_swap = "{SUp}%";
+            format_mem = "{mem_total_used_percents}";
+            format_swap = "{swap_used_percents}";
           }
           {
             block = "cpu";
@@ -347,7 +338,7 @@ in
         active_tab_background = "${active_tab_background}";
         mark1_foreground = "${mark1_foreground}";
         mark1_background = "${mark1_background}";
-        font_size = "14";
+        font_size = "12";
         allow_remote_control = true;
       };
       keybindings = {
@@ -371,6 +362,8 @@ in
 
     lazygit.enable = true;
 
+    lf.enable = true;
+
     mbsync.enable = true;
 
     msmtp.enable = true;
@@ -381,13 +374,13 @@ in
 
     neovim = {
       enable = true;
-      package = pkgs.neovim-nightly;
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
       withPython3 = true;
       withNodeJs = true;
       plugins = with pkgs.vimPlugins // custom-vim-plugins; [
+        vimwiki
         {
           plugin = airline;
           config = ''
@@ -413,12 +406,31 @@ in
         vim-toml
         vim-highlightedyank
         {
-          plugin = dracula-vim;
+          plugin = onedark-nvim;
           config = ''
-            set packpath+=${pkgs.vimPlugins.dracula-vim}/share/vim-plugins/
-            packadd! dracula-vim
-            colorscheme dracula
-            set termguicolors
+            let g:onedark_style = 'darker'
+            colorscheme onedark
+          '';
+        }
+        {
+          plugin = hop-nvim;
+          config = ''
+            nmap <leader>hw <cmd>HopWord<CR>
+          '';
+        }
+        {
+          plugin = nvim-treesitter;
+          config = ''
+            lua <<EOF
+            require'nvim-treesitter.configs'.setup {
+              highlight = {
+                enable = true,
+              },
+              indent = {
+                enable = true,
+              },
+            }
+            EOF
           '';
         }
         {
@@ -447,17 +459,17 @@ in
             nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
             nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
             " auto-format
-            autocmd BufWritePre *.nix lua vim.lsp.buf.formatting_sync(nil, 100)
+            autocmd BufWritePre *.nix,*.hs lua vim.lsp.buf.formatting_sync(nil, 100)
             " lsp servers
             lua << EOF
-              local nvim_lsp = require'lspconfig'
+              local lspconfig = require'lspconfig'
               -- function to attach completion when setting up lsp
               local on_attach = function(client)
                   require'completion'.on_attach(client)
               end
               -- Language servers
-              nvim_lsp.rnix.setup{}
-              nvim_lsp.rust_analyzer.setup {
+              lspconfig.rnix.setup{}
+              lspconfig.rust_analyzer.setup {
                 settings = {
                   ["rust-analyzer"] = {
                     ["checkOnSave"] = {
@@ -467,8 +479,8 @@ in
                   },
                 },
               }
-              nvim_lsp.hls.setup{}
-              nvim_lsp.yamlls.setup{}
+              lspconfig.hls.setup{}
+              lspconfig.yamlls.setup{}
               -- Enable diagnostics
               vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
                 vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -477,9 +489,24 @@ in
                   update_in_insert = true,
                 }
               )
+              -- Example server with hardcoded path
+              local configs = require'lspconfig/configs'
+              if not lspconfig.example_lsp then
+                configs.example_lsp = {
+                  default_config = {
+                    cmd = {'/home/erin/Projects/clean-lsp/example/wrapper.sh'};
+                    filetypes = {'clean'};
+                    root_dir = function(fname)
+                      return lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+                    end;
+                    settings = {};
+                  };
+                }
+              end
+              lspconfig.example_lsp.setup{}
             EOF
-            autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-            \ lua require'lsp_extensions'.inlay_hints{ prefix = "■ ", highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
+            "autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
+            "\ lua require'lsp_extensions'.inlay_hints{ prefix = "■ ", highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
           '';
         }
         {
@@ -493,18 +520,25 @@ in
         vim-vsnip-integ # LSP Support for snippets
       ];
       extraConfig = ''
+        nmap <leader>y "+y
+        vmap <leader>y "+y
+        nmap <leader>yy "+yy
+        nmap <leader>p "+p
+        nmap <leader>P "+P
+        vmap <leader>p "+p 
+        vmap <leader>P "+P"`"`"
         set cc=120
-        set clipboard=unnamedplus
         set dir=~/.swp
-        set listchars=nbsp:¬,tab:→\ ,extends:»,precedes:«,trail:·,space:·
         set list
+        set listchars=nbsp:¬,tab:→\ ,extends:»,precedes:«,trail:·,space:·
         set mouse=a
         set nu rnu
         set path+=**
+        "set noexpandtab
+        "set shiftwidth=4
+        "set tabstop=4
         set tw=119
-        set tabstop=4
-        set shiftwidth=4
-        set noexpandtab
+        filetype plugin indent on
         hi NormalFloat guibg=${background}
         autocmd BufReadPost *
           \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -513,13 +547,16 @@ in
         set completeopt=menuone,noinsert,noselect
         autocmd BufEnter * set title
         nnoremap <leader><space> :noh<CR>
+        set fillchars=eob:\|,
       '';
+
       extraPackages = with pkgs; [
         haskell-language-server
-        rnix-lsp # nix language server
-        yaml-language-server
-        nixfmt
         lua # Required for certain plugins
+        nixfmt
+        rnix-lsp # nix language server
+        rustfmt
+        yaml-language-server
       ];
     };
 
@@ -550,7 +587,25 @@ in
       enable = true;
       matchBlocks = {
         "top-001" = {
-          hostname = "top-001.tilla.cloud";
+          hostname = "top-001.tilaa.cloud";
+          user = "erin";
+          identityFile = "~/.ssh/top-001";
+          port = 22;
+        };
+        "top-ci" = {
+          hostname = "top-002-ci.tilaa.cloud";
+          user = "erin";
+          identityFile = "~/.ssh/top-001";
+          port = 22;
+        };
+        "top-cloogle" = {
+          hostname = "top-003-cloogle.tilaa.cloud";
+          user = "erin";
+          identityFile = "~/.ssh/top-001";
+          port = 22;
+        };
+        "top-staging" = {
+          hostname = "top-004-staging.tilaa.cloud";
           user = "erin";
           identityFile = "~/.ssh/top-001";
           port = 22;
@@ -609,7 +664,7 @@ in
         expireDuplicatesFirst = true;
       };
       prezto = {
-        enable = false;
+        enable = true;
         editor = {
           dotExpansion = true;
           keymap = "vi";
@@ -638,21 +693,22 @@ in
       };
       shellAliases = {
         clean-tags = "steam-run cloogletags -a -c -d ~/clean/lib -o ~/clean/lib/tags";
-        cls = "grep -rn --include '*.dcl' --include '*.icl'";
+        cls = "grep -rni --include '*.dcl' --include '*.icl'";
         con = "home-manager edit";
         debian = "sudo systemd-nspawn -D ~/Debian/";
         grep = "grep --color";
         icat = "kitty +kitten icat";
-        la = "exa -al --git";
         lg = "lazygit";
-        ll = "exa -l --git";
-        ls = "exa";
         project-tags = "steam-run cloogletags -a -c -d . -o .tags";
         r = "ranger";
         ssh = "kitty +kitten ssh";
         update = "sudo nix-channel --update";
         upgrade = "sudo nixos-rebuild switch && home-manager switch";
-        vfzf = "vim \"$(fzf)\"";
+        vfzf = "nvim \"$(fzf)\"";
+        # Translation
+        sv = "trans -t sv-SE";
+        nl = "trans -t nl-NL";
+        en = "trans -t en-GB";
       };
     };
   };
@@ -706,7 +762,7 @@ in
           lib.mkOptionDefault {
             "${modifier}+h" = "focus left";
             "${modifier}+j" = "focus down";
-            "${modifier}+k" = "focus right";
+            "${modifier}+k" = "focus up";
             "${modifier}+l" = "focus right";
             "${modifier}+Shift+h" = "move left";
             "${modifier}+Shift+j" = "move down";
