@@ -1,1 +1,1 @@
-Photo by David Becker
+Photo by Pixabay
