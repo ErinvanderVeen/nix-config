@@ -63,13 +63,50 @@
     '';
   };
 
+  # Make sure we have a decent default editor
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+  };
+
   # For rage encryption, all hosts need a ssh key pair
   services.openssh = {
     enable = true;
     openFirewall = lib.mkDefault false;
+    permitRootLogin = "no";
   };
 
   # Service that makes Out of Memory Killer more effective
   services.earlyoom.enable = true;
 
+  # X11 related configuration
+  services.xserver = {
+    enable = true;
+    # Configure keymap in X11
+    layout = "us";
+    xkbVariant = "altgr-intl";
+    xkbOptions = "caps:swapescape";
+
+    libinput = {
+      # Enable touchpad support (enabled default in most desktopManager).
+      enable = true;
+      mouse = {
+        accelProfile = "flat";
+        accelSpeed = "-0.5";
+      };
+    };
+  };
+
+  # Sound
+  # rtkit allows pipewire to get real time scheduling on demand (recommended by nixos wiki)
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+  };
+  hardware.pulseaudio.enable = false;
+
+  # Boot related
+  boot.plymouth.enable = true;
 }

@@ -15,12 +15,15 @@ in
     systemPackages = with pkgs; [
       # TODO: must come from unstable channel
       # alejandra
+      bat
       binutils
       coreutils
       curl
       direnv
       dnsutils
+      exa
       fd
+      fzf
       git
       bottom
       jq
@@ -31,6 +34,7 @@ in
       ripgrep
       skim
       tealdeer
+      trash-cli
       whois
     ];
 
@@ -87,6 +91,18 @@ in
         si = ifSudo "sudo -i";
         se = ifSudo "sudoedit";
 
+        # cat
+        cat = "bat";
+
+        # ls/exa
+        ls = "exa";
+        l = "exa -lbF --git";
+        ll = "exa -lbGF --git";
+        llm = "exa -lbGd --git --sort=modified";
+        la = "exa -lbhHigUmuSa --time-style=long-iso --git --color-scale";
+        lx = "exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale";
+        lS = "exa -1";
+        lt = "exa --tree --level=2";
       };
   };
 

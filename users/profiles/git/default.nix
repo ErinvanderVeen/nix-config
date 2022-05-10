@@ -2,9 +2,35 @@
   programs.git = {
     enable = true;
 
+    lfs.enable = true;
+
+    userEmail = "erin@erinvanderveen.nl";
+
+    userName = "Erin van der Veen";
+
+    ignores = [
+      "*~"
+      ".tags"
+      ".direnv"
+    ];
+
     extraConfig = {
+      init.defaultBranch = "main";
+      merge.tool = "nvimdiff";
       pull.rebase = false;
     };
+
+
+    includes = [
+      {
+        condition = "gitdir:~/Projects/tweag/";
+        contents = {
+          user = {
+            email = "erin.vanderveen@tweag.io";
+          };
+        };
+      }
+    ];
 
     aliases = {
       a = "add -p";

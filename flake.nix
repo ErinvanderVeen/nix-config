@@ -28,7 +28,7 @@
       bud.inputs.nixpkgs.follows = "nixos";
       bud.inputs.devshell.follows = "digga/devshell";
 
-      home.url = "github:nix-community/home-manager/release-21.11";
+      home.url = "github:nix-community/home-manager/master";
       home.inputs.nixpkgs.follows = "nixos";
 
       darwin.url = "github:LnL7/nix-darwin";
@@ -117,15 +117,37 @@
 
           imports = [ (digga.lib.importHosts ./hosts/nixos) ];
           hosts = {
-            /* set host-specific properties here */
+            # Default configuration (for bootstrap ISO etc)
             NixOS = { };
+            Zojja = {
+              channelName = "nixos";
+              modules = with nixos-hardware.nixosModules; [
+                asus-battery
+                common-cpu-intel
+                common-cpu-intel-kaby-lake
+                common-pc-laptop
+                common-pc-laptop-ssd
+              ];
+            };
+            Gwen = {
+              channelName = "nixos";
+              modules = with nixos-hardware.nixosModules; [
+                common-gpu-nvidia
+                common-pc
+                common-pc-ssd
+              ];
+            };
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core.nixos users.nixos users.root ];
+              base = [ core.nixos users.erin users.root ];
+              development = [ ];
+              laptop = [ gnome ];
+              desktop = [ gnome ];
+              games = [ steam ];
             };
           };
         };
@@ -164,26 +186,25 @@
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
-              base = [ direnv git ];
+              base = [ core direnv nvim kitty bat skim helix exa ];
+              development = [ git lazygit haskell ];
+              desktop = [ gnome nextcloud desktop-packages ];
+              work = [ tweag ];
+              games = [ minecraft lutris ];
             };
           };
           users = {
-            # TODO: does this naming convention still make sense with darwin support?
-            #
-            # - it doesn't make sense to make a 'nixos' user available on
-            #   darwin, and vice versa
-            #
-            # - the 'nixos' user might have special significance as the default
-            #   user for fresh systems
-            #
-            # - perhaps a system-agnostic home-manager user is more appropriate?
-            #   something like 'primaryuser'?
-            #
-            # all that said, these only exist within the `hmUsers` attrset, so
-            # it could just be left to the developer to determine what's
-            # appropriate. after all, configuring these hm users is one of the
-            # first steps in customizing the template.
+            # Server user
             nixos = { suites, ... }: { imports = suites.base; };
+            # My personal user
+            erin = { suites, ... }: {
+              imports = suites.base
+                ++ suites.development
+                ++ suites.desktop
+                ++ suites.work
+                ++ suites.games;
+            };
+
             darwin = { suites, ... }: { imports = suites.base; };
           }; # digga.lib.importers.rakeLeaves ./users/hm;
         };
