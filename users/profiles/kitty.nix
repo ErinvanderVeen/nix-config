@@ -3,32 +3,58 @@
   programs.kitty = {
     enable = true;
     extraConfig = ''
-      foreground #979eab
-      background #282c34
-
-      color0 #282c34
-      color1 #e06c75
-      color2 #98c379
-      color3 #e5c07b
-      color4 #61afef
-      color5 #be5046
-      color6 #56b6c2
-      color7 #979eab
-      color8 #393e48
-      color9 #d19a66
-      color10 #56b6c2
-      color11 #e5c07b
-      color12 #61afef
-      color13 #be5046
-      color14 #56b6c2
-      color15 #abb2bf
-
-      # Tab Bar
-
-      active_tab_foreground   #282c34
-      active_tab_background   #979eab
-      inactive_tab_foreground #abb2bf
-      inactive_tab_background #282c34
+      ## name: Rosé Pine
+      ## author: mvllow
+      ## license: MIT
+      ## upstream: https://github.com/rose-pine/kitty/blob/main/dist/rose-pine.conf
+      ## blurb: All natural pine, faux fur and a bit of soho vibes for the classy minimalist
+      
+      foreground               #e0def4
+      background               #191724
+      selection_foreground     #e0def4
+      selection_background     #403d52
+      
+      cursor                   #524f67
+      cursor_text_color        #e0def4
+      
+      url_color                #c4a7e7
+      
+      active_tab_foreground    #e0def4
+      active_tab_background    #26233a
+      inactive_tab_foreground  #6e6a86
+      inactive_tab_background  #191724
+      
+      # black
+      color0   #26233a
+      color8   #6e6a86
+      
+      # red
+      color1   #eb6f92
+      color9   #eb6f92
+      
+      # green
+      color2   #31748f
+      color10  #31748f
+      
+      # yellow
+      color3   #f6c177
+      color11  #f6c177
+      
+      # blue
+      color4   #9ccfd8
+      color12  #9ccfd8
+      
+      # magenta
+      color5   #c4a7e7
+      color13  #c4a7e7
+      
+      # cyan
+      color6   #ebbcba
+      color14  #ebbcba
+      
+      # white
+      color7   #e0def4
+      color15  #e0def4
     '';
     font = {
       package = pkgs.nerdfonts;

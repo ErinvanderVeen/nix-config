@@ -15,7 +15,7 @@
     gnomeExtensions.forge # Tiling WM
     gnomeExtensions.gsconnect # Connect to phone
     gnomeExtensions.vitals # Computer status
-    orchis-theme
+    rose-pine-gtk-theme
     gnome.gnome-boxes
   ];
 

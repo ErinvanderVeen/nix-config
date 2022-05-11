@@ -2,7 +2,7 @@
 {
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      gtk-theme = "Orchis-dark";
+      gtk-theme = "Rose-Pine";
     };
 
     "org/gnome/desktop/wm/keybindings" = {

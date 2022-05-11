@@ -3,7 +3,7 @@
   programs.helix = {
     enable = true;
     settings = {
-      theme = "onedark";
+      theme = "rose_pine";
       editor = {
         line-number = "relative";
       };
