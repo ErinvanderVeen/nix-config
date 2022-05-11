@@ -15,6 +15,7 @@ channels: final: prev: {
     starship
     deploy-rs
     polymc
+    helix
     ;
 
   haskellPackages = prev.haskellPackages.override
