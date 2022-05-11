@@ -3,6 +3,9 @@
   programs.alacritty = {
     enable = true;
     settings = {
+      shell = {
+        program = "zellij";
+      };
       colors = {
         primary = {
           background = "0x191724";
