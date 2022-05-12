@@ -3,6 +3,7 @@
   programs.zellij = {
     enable = true;
     settings = {
+      mouse-mode = false;
       theme = "rose-pine";
       themes.rose-pine = {
         fg = 8;
