@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  home.packages = [ pkgs.nerdfonts ];
   programs.alacritty = {
     enable = true;
     settings = {
@@ -22,6 +23,8 @@
           fi
         '';
       };
+      font.normal.family = "Fira Mono Nerd Font";
+      font.size = 10;
       colors = {
         primary = {
           background = "0x191724";
