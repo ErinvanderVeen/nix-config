@@ -4,25 +4,6 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      shell = {
-        program = pkgs.writeShellScript "startup.sh" ''
-          #!/usr/bin/env bash
-          ZJ_SESSIONS=$(zellij list-sessions)
-          NO_SESSIONS=$(echo "''${ZJ_SESSIONS}" | wc -l)
-
-          if [ "''${NO_SESSIONS}" -ge 1 ]; then
-              CHOICES="''${ZJ_SESSIONS}"$'\nnew-session'
-              CHOICE="$(echo "''${CHOICES}" | sk)"
-              if [ "''${CHOICE}" = "new-session" ]; then
-                  zellij
-              else
-                  zellij attach "''${CHOICE}"
-              fi
-          else
-             zellij
-          fi
-        '';
-      };
       font.normal.family = "Fira Mono Nerd Font";
       font.size = 10;
       colors = {
