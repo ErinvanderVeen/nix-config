@@ -7,9 +7,6 @@
   ++ suites.games
   ++ suites.development;
 
-  bud.enable = true;
-  bud.localFlakeClone = "/home/erin/Projects/nix-config";
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
