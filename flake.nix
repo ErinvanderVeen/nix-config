@@ -119,7 +119,7 @@
           hosts = {
             # Default configuration (for bootstrap ISO etc)
             NixOS = { };
-            Zojja = {
+            Aurene = {
               channelName = "nixos";
               modules = with nixos-hardware.nixosModules; [
                 asus-battery
