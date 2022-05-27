@@ -33,6 +33,15 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/82f227c2-409c-4f35-9052-b3122e9e3094"; }];
 
+  boot.initrd.luks.devices = {
+    luksroot = {
+      device = "/dev/disk/by-uuid/0f384a9e-bf06-406a-9a54-9ee549528af4";
+      preLVM = true;
+      allowDiscards = true;
+    };
+  };
+
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
