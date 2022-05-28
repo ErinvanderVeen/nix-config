@@ -10,12 +10,12 @@ channels: final: prev: {
     rage
     nix-index
     nixpkgs-fmt
-    qutebrowser
     signal-desktop
     starship
     deploy-rs
     polymc
     helix
+    lutris
     ;
 
   haskellPackages = prev.haskellPackages.override
