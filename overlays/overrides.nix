@@ -13,9 +13,7 @@ channels: final: prev: {
     signal-desktop
     starship
     deploy-rs
-    polymc
     helix
-    lutris
     ;
 
   haskellPackages = prev.haskellPackages.override
