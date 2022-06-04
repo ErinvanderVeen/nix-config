@@ -207,7 +207,7 @@
                   i = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation" },
                   D = { "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>", "Open Diagnostics" },
                   e = { "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", "Show Diagnostic" },
-                  a = { "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>", "Code Actions" },
+                  a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Actions" },
                   s = { "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", "Document Symbols" },
                   S = { "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", "Workspace Symbols" },
                   r = { "<cmd>lua vim.lsp.buf.references()<CR>", "Find References" },
@@ -280,6 +280,14 @@
                 },
               },
             }
+          EOF
+        '';
+      }
+      {
+        plugin = telescope-ui-select-nvim;
+        config = ''
+          lua <<EOF
+            require("telescope").load_extension("ui-select")
           EOF
         '';
       }
