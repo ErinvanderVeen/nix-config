@@ -187,7 +187,7 @@
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
               base = [ core direnv nvim alacritty zellij bat skim helix exa ];
-              development = [ git lazygit haskell github ];
+              development = [ git lazygit haskell github godot ];
               desktop = [ sway gnome nextcloud desktop-packages ];
               work = [ tweag ];
               games = [ minecraft lutris ];
