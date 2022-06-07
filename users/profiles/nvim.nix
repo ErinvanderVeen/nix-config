@@ -145,7 +145,17 @@
         '';
       }
       cmp-nvim-lsp
-      luasnip
+      # Snippets
+      cmp_luasnip
+      friendly-snippets
+      {
+        plugin = luasnip;
+        config = ''
+          lua <<EOF
+            require("luasnip.loaders.from_vscode").lazy_load()
+          EOF
+        '';
+      }
       {
         plugin = nvim-tree-lua;
         config = ''
