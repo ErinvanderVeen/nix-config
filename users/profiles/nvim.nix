@@ -70,6 +70,9 @@
       # Required for local grammars
       tree-sitter
       clang
+
+      # Copy pasting
+      xsel
     ];
     viAlias = true;
     vimAlias = true;
