@@ -9,7 +9,6 @@
       aspellDicts.nl
       aspellDicts.nb
       aspellDicts.sv
-      discord # UNFREE
       keepassxc
       libreoffice-fresh
       signal-desktop
