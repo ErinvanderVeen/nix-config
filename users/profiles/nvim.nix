@@ -278,10 +278,10 @@
         '';
       }
       {
-        plugin = onedarkpro-nvim;
+        plugin = oceanic-next;
         config = ''
           lua <<EOF
-            vim.cmd [[colorscheme onedarkpro]]
+            vim.cmd [[colorscheme OceanicNext]]
           EOF
         '';
       }
