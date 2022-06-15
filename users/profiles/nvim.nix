@@ -242,6 +242,7 @@
                   a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Actions" },
                   S = { "<cmd>lua require('telescope.builtin').diagnostics()<CR>", "Workspace Symbols" },
                   r = { "<cmd>lua vim.lsp.buf.references()<CR>", "Find References" },
+                  R = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
                   f = { "<cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>", "Format"},
                   h = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
                   l = { "<cmd>e ~/.cache/nvim/lsp.log<CR>", "Open Log" },
