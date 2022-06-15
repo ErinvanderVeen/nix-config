@@ -187,7 +187,7 @@
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
               base = [ core direnv nvim alacritty zellij bat skim helix ];
-              development = [ git lazygit github godot ];
+              development = [ git lazygit github ];
               desktop = [ sway gnome nextcloud desktop-packages discord ];
               work = [ tweag ];
               games = [ minecraft lutris ];
@@ -195,7 +195,10 @@
           };
           users = {
             # Server user
-            nixos = { suites, ... }: { imports = suites.base; };
+            nixos = { suites, ... }: {
+              imports = suites.base
+                ++ suites.development;
+            };
             # My personal user
             erin = { suites, ... }: {
               imports = suites.base
@@ -206,7 +209,7 @@
             };
 
             darwin = { suites, ... }: { imports = suites.base; };
-          }; # digga.lib.importers.rakeLeaves ./users/hm;
+          };
         };
 
         devshell = ./shell;
