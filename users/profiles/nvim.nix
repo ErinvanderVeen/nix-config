@@ -31,7 +31,6 @@
         opt.hidden = true
         opt.history = 100
         opt.lazyredraw = true
-        opt.termguicolors = true
         opt.completeopt = 'menuone,noselect'
 
         cmd [[
@@ -282,6 +281,7 @@
         plugin = oceanic-next;
         config = ''
           lua <<EOF
+            vim.opt.termguicolors = true
             vim.cmd [[colorscheme OceanicNext]]
           EOF
         '';
