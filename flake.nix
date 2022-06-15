@@ -186,9 +186,9 @@
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
-              base = [ core direnv nvim alacritty zellij bat skim helix ];
+              base = [ core direnv nvim zellij bat skim helix ];
               development = [ git lazygit github ];
-              desktop = [ sway gnome nextcloud desktop-packages discord ];
+              desktop = [ sway gnome nextcloud desktop-packages discord alacritty ];
               work = [ tweag ];
               games = [ minecraft lutris ];
             };
