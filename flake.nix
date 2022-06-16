@@ -145,7 +145,7 @@
             suites = with profiles; rec {
               base = [ core.nixos users.erin users.root ];
               development = [ ];
-              laptop = [ gnome ];
+              laptop = [ gnome sway ];
               desktop = [ gnome ];
               games = [ steam ];
             };

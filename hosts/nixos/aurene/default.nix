@@ -3,7 +3,7 @@
   imports = [
     ./hardware-configuration.nix
   ] ++ suites.base
-  ++ suites.desktop
+  ++ suites.laptop
   ++ suites.games
   ++ suites.development;
 
