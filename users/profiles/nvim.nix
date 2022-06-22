@@ -162,7 +162,7 @@
             require("nvim-tree").setup{}
             wk.register{
               ["<leader>"] = {
-                e = { "<cmd>NvimTreeToggle<cr>", "Tree"},
+                e = { "<cmd>NvimTreeFindFileToggle<cr>", "Tree"},
               },
             }
           EOF
