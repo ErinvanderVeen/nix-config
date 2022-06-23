@@ -4,6 +4,7 @@
     enable = true;
     settings = {
       mouse_mode = false;
+      pane_frames = false;
       theme = "rose-pine";
       themes.rose-pine = {
         fg = 8;
