@@ -23,7 +23,10 @@
 
   programs.himalaya = {
     enable = true;
-    settings = { };
+  };
+
+  home.shellAliases = {
+    mail = "nvim -c \"Himalaya\"";
   };
 
   programs.neovim.plugins = [
