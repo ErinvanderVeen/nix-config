@@ -23,6 +23,9 @@
 
   programs.himalaya = {
     enable = true;
+    settings = {
+      default-page-size = 50;
+    };
   };
 
   home.shellAliases = {
