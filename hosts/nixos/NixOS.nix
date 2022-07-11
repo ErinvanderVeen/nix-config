@@ -9,4 +9,6 @@
   networking.networkmanager.enable = true;
 
   fileSystems."/" = { device = "/dev/disk/by-label/nixos"; };
+
+  system.stateVersion = "21.11";
 }
