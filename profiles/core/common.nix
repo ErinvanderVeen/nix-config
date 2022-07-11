@@ -107,9 +107,6 @@ in
 
   fonts.fonts = with pkgs; [ powerline-fonts dejavu_fonts ];
 
-  bud.enable = true;
-  bud.localFlakeClone = "/home/erin/Projects/nix-config";
-
   nix = {
 
     # Improve nix store disk usage
