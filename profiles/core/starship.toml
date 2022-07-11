@@ -17,6 +17,9 @@ symbol = " "
 style = "cyan"
 read_only = " 🔒"
 
+[docker_context]
+symbol = " "
+
 [elixir]
 symbol = " "
 
