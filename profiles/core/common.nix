@@ -39,10 +39,17 @@ in
 
     # Starship is a fast and featureful shell prompt
     # starship.toml has sane defaults that can be changed there
+    # Use nr X to run X from nixpkgs
     shellInit = ''
       export STARSHIP_CONFIG=${
         pkgs.writeText "starship.toml"
         (fileContents ./starship.toml)
+      }
+
+      nr () {
+        cmd=$1
+        shift
+        nix run "nixpkgs#$cmd -- " $@
       }
     '';
 
