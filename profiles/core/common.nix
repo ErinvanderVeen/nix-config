@@ -72,9 +72,6 @@ in
 
         # nix
         n = "nix";
-        np = "n profile";
-        ni = "np install";
-        nr = "np remove";
         ns = "n search --no-update-lock-file";
         nf = "n flake";
         nepl = "n repl '<nixpkgs>'";
