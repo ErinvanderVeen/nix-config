@@ -16,6 +16,7 @@
       trash-cli
       transmission-gtk
       tor-browser-bundle-bin
+      element-desktop
     ];
     keyboard = null;
   };
