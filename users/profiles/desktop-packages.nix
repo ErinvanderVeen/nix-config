@@ -16,8 +16,6 @@
       trash-cli
       transmission-gtk
       tor-browser-bundle-bin
-      joplin
-      joplin-desktop
     ];
     keyboard = null;
   };
