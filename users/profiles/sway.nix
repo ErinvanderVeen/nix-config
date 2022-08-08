@@ -74,8 +74,7 @@ in
       #seat = null;
       startup = [
         { command = "${pkgs.autotiling}/bin/autotiling"; }
-        #{ command = "${pkgs.swaywsr}/bin/swaywsr"; always = true; }
-        { command = "${pkgs.workstyle}/bin/workstyle"; always = true; }
+        { command = "${pkgs.swaywsr}/bin/swaywsr"; always = true; }
         { command = "${pkgs.swaynotificationcenter}/bin/swaync"; }
         { command = "${bing}/bin/bing"; }
       ];
