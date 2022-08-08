@@ -44,7 +44,11 @@ in
       #floating = null;
       #focus = null;
       #fonts = null;
-      #gaps = null;
+      gaps = {
+        inner = 10;
+        outer = 10;
+        smartBorders = "on";
+      };
       input = {
         "*" = {
           xkb_variant = "altgr-intl";
