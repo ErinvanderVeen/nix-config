@@ -126,7 +126,7 @@
             Gwen = {
               channelName = "nixos";
               modules = with nixos-hardware.nixosModules; [
-                common-gpu-nvidia
+                common-gpu-intel
                 common-pc
                 common-pc-ssd
               ];
@@ -140,7 +140,7 @@
               base = [ core.nixos users.erin users.root ];
               development = [ ];
               laptop = [ gnome sway ];
-              desktop = [ gnome ];
+              desktop = [ gnome sway ];
               games = [ steam ];
             };
           };
