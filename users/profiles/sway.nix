@@ -1,7 +1,31 @@
 { pkgs, config, lib, ... }:
+let
+  bing = pkgs.writeShellScriptBin "bing" ''
+    set -e
+
+    if [ -z "$SWAYSOCK" ]; then
+      export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
+    fi
+
+    wlpath=''${WALLPAPER_PATH:-"$HOME/wallpaper.jpg"}
+    lswlpath=''${LOCK_SCREEN_WALLPAPER_PATH:-"$HOME/lockscreen_wallpaper.jpg"}
+    output=''${WALLPAPER_OUTPUT:-"*"}
+    baseurl="https://www.bing.com/"
+    wluri=$(curl $baseurl"HPImageArchive.aspx?format=js&idx=0&n=20&mkt=en-GB" -s | jq '.images[].url' --raw-output | shuf -n 1)
+
+    ${pkgs.curl}/bin/curl "$baseurl$wluri" -s > $wlpath
+
+    pkill swaybg || true
+
+    ${pkgs.sway}/bin/swaymsg "output $output bg $wlpath fill"
+
+    ${pkgs.imagemagick}/bin/convert $wlpath -filter Gaussian -blur 0x8 -level 10%,90%,0.5 $lswlpath
+  '';
+in
 {
   home.packages = with pkgs; [
     swaynotificationcenter
+    bing
   ];
 
   wayland.windowManager.sway = {
@@ -49,6 +73,7 @@
         #{ command = "${pkgs.swaywsr}/bin/swaywsr"; always = true; }
         { command = "${pkgs.workstyle}/bin/workstyle"; always = true; }
         { command = "${pkgs.swaynotificationcenter}/bin/swaync"; }
+        { command = "${bing}/bin/bing"; }
       ];
       terminal = "${pkgs.foot}/bin/foot";
       #up = null;
