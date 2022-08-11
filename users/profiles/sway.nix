@@ -78,7 +78,7 @@ in
         { command = "${pkgs.swaynotificationcenter}/bin/swaync"; }
         { command = "${bing}/bin/bing"; }
       ];
-      terminal = "${pkgs.foot}/bin/foot";
+      terminal = "${pkgs.foot}/bin/footclient";
       #up = null;
       #window = null;
       workspaceAutoBackAndForth = true;
