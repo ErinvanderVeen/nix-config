@@ -182,7 +182,7 @@
             suites = with profiles; rec {
               base = [ core direnv nvim zellij bat skim helix mail ];
               development = [ git lazygit gitui github ];
-              desktop = [ sway gnome nextcloud desktop-packages discord alacritty foot ];
+              desktop = [ sway gnome nextcloud desktop-packages discord alacritty ];
               music = [ mpd ];
               work = [ tweag ];
               games = [ minecraft lutris ];

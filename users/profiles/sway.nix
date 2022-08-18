@@ -24,6 +24,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    xdg-desktop-portal-wlr
     swaynotificationcenter
     bing
   ];
@@ -78,7 +79,7 @@ in
         { command = "${pkgs.swaynotificationcenter}/bin/swaync"; }
         { command = "${bing}/bin/bing"; }
       ];
-      terminal = "${pkgs.foot}/bin/footclient";
+      terminal = "${pkgs.alacritty}/bin/alacritty";
       #up = null;
       #window = null;
       workspaceAutoBackAndForth = true;
