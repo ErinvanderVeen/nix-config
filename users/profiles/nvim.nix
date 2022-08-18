@@ -278,11 +278,11 @@
         '';
       }
       {
-        plugin = oceanic-next;
+        plugin = zephyr-nvim;
         config = ''
           lua <<EOF
             vim.opt.termguicolors = true
-            vim.cmd [[colorscheme OceanicNext]]
+            require('zephyr')
           EOF
         '';
       }
