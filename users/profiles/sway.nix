@@ -64,6 +64,7 @@ in
         in
         lib.mkOptionDefault {
           "${modifier}+Shift+n" = "exec swaync-client -t -swb -sw";
+          "${modifier}+Shift+s" = "exec ${pkgs.sway-conrib.grimshot}/bin/grimshot --notify copy area";
         };
       #keycodebindings = null;
       #left = null;
