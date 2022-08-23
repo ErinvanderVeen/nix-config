@@ -39,7 +39,44 @@ in
         }
       ];
       #bindKeysToCode = null;
-      #colors = null;
+      colors = {
+        background = "#132738";
+        focused = {
+          background = "#5555ff";
+          border = "#fac661";
+          childBorder = "#5555ff";
+          indicator = "#5555ff";
+          text = "#000000";
+        };
+        focusedInactive = {
+          background = "#ff0000";
+          border = "#ff0000";
+          childBorder = "#ff0000";
+          indicator = "#ffe50a";
+          text = "#ff005d";
+        };
+        placeholder = {
+          background = "#000000";
+          border = "#000000";
+          childBorder = "#000000";
+          indicator = "#000000";
+          text = "#ff005d";
+        };
+        unfocused = {
+          background = "#000000";
+          border = "#ff0000";
+          childBorder = "#ff0000";
+          indicator = "#ff0000";
+          text = "#ff005d";
+        };
+        urgent = {
+          background = "#555555";
+          border = "#555555";
+          childBorder = "#555555";
+          indicator = "#555555";
+          text = "#000000";
+        };
+      };
       #defaultWorkspace = null;
       #down = null;
       #floating = null;
@@ -64,7 +101,7 @@ in
         in
         lib.mkOptionDefault {
           "${modifier}+Shift+n" = "exec swaync-client -t -swb -sw";
-          "${modifier}+Shift+s" = "exec ${pkgs.sway-conrib.grimshot}/bin/grimshot --notify copy area";
+          "${modifier}+Shift+s" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area";
         };
       #keycodebindings = null;
       #left = null;
