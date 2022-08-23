@@ -52,6 +52,7 @@
     allowedUsers = [ "@wheel" ];
   };
 
+  # Bash is set as the default, but this is overriden in the home-manager core
   programs.bash = {
     # Enable starship
     promptInit = ''

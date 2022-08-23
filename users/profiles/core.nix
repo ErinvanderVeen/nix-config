@@ -1,6 +1,11 @@
 { pkgs, ... }:
 {
-  programs.bash.enable = true;
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      ${pkgs.starship}/bin/starship init fish | source
+    '';
+  };
 
   home.packages = with pkgs; [
     # SPELLING
