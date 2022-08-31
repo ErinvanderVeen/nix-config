@@ -12,11 +12,11 @@
     gnomeExtensions.appindicator # Sys tray
     gnomeExtensions.bing-wallpaper-changer
     gnomeExtensions.blur-my-shell # Blur when opening menu
-    gnomeExtensions.forge # Tiling WM
     gnomeExtensions.gsconnect # Connect to phone
     gnomeExtensions.vitals # Computer status
     rose-pine-gtk-theme
     gnome.gnome-boxes
+    gnome.pomodoro
   ];
 
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];

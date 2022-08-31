@@ -17,11 +17,11 @@
       enabled-extensions = [
         "appindicatorsupport@rgcjonas.gmail.com"
         "BingWallpaper@ineffable-gmail.com"
-        "forge@jmmaranan.com"
         "gsconnect@andyholmes.github.io"
         "Vitals@CoreCoding.com"
         "shell-volume-mixer@derhofbauer.at"
         "blur-my-shell@aunetx"
+        "pomodoro@arun.codito.in"
       ];
     };
 
