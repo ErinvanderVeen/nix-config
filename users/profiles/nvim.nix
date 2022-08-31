@@ -159,7 +159,7 @@
         plugin = nvim-tree-lua;
         config = ''
           lua <<EOF
-            require("nvim-tree").setup{}
+            require("nvim-tree").setup {}
             wk.register{
               ["<leader>"] = {
                 e = { "<cmd>NvimTreeFindFileToggle<cr>", "Tree"},
@@ -169,7 +169,34 @@
         '';
       }
       vim-markdown
-      #vimwiki
+      {
+        plugin = neorg;
+        config = ''
+          lua << EOF
+          require('neorg').setup {
+            load = {
+              ["core.defaults"] = {},
+              ["core.norg.concealer"] = {},
+              ["core.norg.concealer"] = {},
+              ["core.norg.completion"] = {
+                config = {
+                  engine = "nvim-cmp",
+                }
+              },
+              ["core.norg.dirman"] = {
+                config = {
+                  workspaces = {
+                    humblewood = "~/Projects/Humblewood",
+                    workd = "~/Projects/Notes/work",
+                    home = "~/Projects/Notes/home",
+                  }
+                }
+              },
+            }
+          }
+          EOF
+        '';
+      }
       markdown-preview-nvim
       {
         plugin = nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars);
@@ -558,14 +585,6 @@
       }
       rust-vim
       lalrpop-vim
-      # CUSTOM/LOCAL PLUGINS
-      #(pkgs.vimUtils.buildVimPluginFrom2Nix
-      #  {
-      #    pname = "vim-nickel";
-      #    version = "0.1";
-      #    src = /home/erin/Projects/tweag/vim-nickel;
-      #  }
-      #)
     ];
   };
 
