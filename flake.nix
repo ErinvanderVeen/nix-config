@@ -185,7 +185,7 @@
               desktop = [ sway gnome nextcloud desktop-packages discord alacritty ];
               music = [ mpd ];
               work = [ tweag ];
-              games = [ minecraft lutris ];
+              games = [ minecraft lutris mangohud ];
             };
           };
           users = {
