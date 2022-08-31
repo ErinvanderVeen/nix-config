@@ -52,17 +52,8 @@
     allowedUsers = [ "@wheel" ];
   };
 
-  # Bash is set as the default, but this is overriden in the home-manager core
-  programs.bash = {
-    # Enable starship
-    promptInit = ''
-      eval "$(${pkgs.starship}/bin/starship init bash)"
-    '';
-    # Enable direnv, a tool for managing shell environments
-    interactiveShellInit = ''
-      eval "$(${pkgs.direnv}/bin/direnv hook bash)"
-    '';
-  };
+  users.defaultUserShell = pkgs.fish;
+  programs.fish.enable = true;
 
   # Make sure we have a decent default editor
   programs.neovim = {
