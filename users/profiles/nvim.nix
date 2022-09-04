@@ -197,6 +197,24 @@
           EOF
         '';
       }
+      {
+        plugin = vimwiki;
+        config = ''
+          let g:vimwiki_list = [
+            \ {'path': '~/Projects/Humblewood/', 'syntax': 'markdown', 'ext': '.md'}
+          \ ]
+          lua <<EOF
+            wk.register{
+              ["<leader>"] = {
+                w = {
+                  name = "+wiki",
+                  h = { "<cmd>VimwikiIndex 0<CR>", "Humblewood" },
+                },
+              },
+            }
+          EOF
+        '';
+      }
       markdown-preview-nvim
       {
         plugin = nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars);
