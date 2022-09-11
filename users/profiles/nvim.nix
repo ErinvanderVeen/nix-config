@@ -201,14 +201,18 @@
         plugin = vimwiki;
         config = ''
           let g:vimwiki_list = [
-            \ {'path': '~/Projects/Humblewood/', 'syntax': 'markdown', 'ext': '.md'}
+            \ {'path': '~/Projects/Humblewood/', 'syntax': 'markdown', 'ext': '.md'},
+            \ {'path': '~/Projects/tweag/Notes/', 'syntax': 'markdown', 'ext': '.md'},
+            \ {'path': '~/Projects/Davvisámegiella/', 'syntax': 'markdown', 'ext': '.md'}
           \ ]
           lua <<EOF
             wk.register{
               ["<leader>"] = {
                 w = {
                   name = "+wiki",
-                  h = { "<cmd>VimwikiIndex 0<CR>", "Humblewood" },
+                  h = { "<cmd>VimwikiIndex 1<CR>", "Humblewood" },
+                  t = { "<cmd>VimwikiIndex 2<CR>", "Tweag" },
+                  d = { "<cmd>VimwikiIndex 3<CR>", "Davvisámegiella" },
                 },
               },
             }
