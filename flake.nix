@@ -139,8 +139,8 @@
             suites = with profiles; rec {
               base = [ core.nixos users.erin users.root ];
               development = [ ];
-              laptop = [ gnome sway ];
-              desktop = [ gnome ];
+              laptop = [ gnome sway mozillavpn ];
+              desktop = [ gnome mozillavpn ];
               games = [ steam ];
             };
           };
