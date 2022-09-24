@@ -187,6 +187,7 @@
               work = [ tweag ];
               games = [ minecraft lutris dolphin ];
               game-debug = [ mangohud ];
+              creative = [ digital-art ];
             };
           };
           users = {
@@ -209,6 +210,7 @@
               imports = suites.base
                 ++ suites.desktop
                 ++ suites.music
+                ++ suites.creative
                 ++ suites.games;
             };
 
