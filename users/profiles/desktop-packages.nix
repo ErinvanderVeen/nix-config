@@ -17,6 +17,9 @@
       transmission-gtk
       tor-browser-bundle-bin
       element-desktop
+      spotify
+      helvum
+      baobab
     ];
     keyboard = null;
   };
