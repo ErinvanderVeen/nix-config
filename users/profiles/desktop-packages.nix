@@ -20,6 +20,9 @@
       spotify
       helvum
       baobab
+
+      # For google meet (FF works, but camera quality is greatly reduced)
+      ungoogled-chromium
     ];
     keyboard = null;
   };
