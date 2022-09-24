@@ -131,6 +131,14 @@
                 common-pc-ssd
               ];
             };
+            Taimi = {
+              channelName = "nixos";
+              modules = with nixos-hardware.nixosModules; [
+                common-gpu-nvidia
+                common-pc
+                common-pc-ssd
+              ];
+            };
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
