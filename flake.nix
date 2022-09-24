@@ -137,7 +137,7 @@
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core.nixos users.erin users.root ];
+              base = [ core.nixos users.erin users.maatje users.root ];
               development = [ ];
               laptop = [ gnome sway mozillavpn ];
               desktop = [ gnome mozillavpn ];
@@ -185,7 +185,8 @@
               desktop = [ sway gnome nextcloud desktop-packages discord alacritty ];
               music = [ mpd ];
               work = [ tweag ];
-              games = [ minecraft lutris mangohud ];
+              games = [ minecraft lutris dolphin ];
+              game-debug = [ mangohud ];
             };
           };
           users = {
@@ -201,6 +202,13 @@
                 ++ suites.desktop
                 ++ suites.music
                 ++ suites.work
+                ++ suites.games
+                ++ suites.game-debug;
+            };
+            maatje = { suites, ... }: {
+              imports = suites.base
+                ++ suites.desktop
+                ++ suites.music
                 ++ suites.games;
             };
 
