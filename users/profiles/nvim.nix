@@ -322,6 +322,7 @@
             lspc.rnix.setup{ on_attach = on_attach, capabilities = capabilities, flags = flags }
             lspc.clangd.setup{ on_attach = on_attach, capabilities = capabilities, flags = flags }
             lspc.denols.setup{ on_attach = on_attach, capabilities = capabilities, flags = flags }
+            lspc.gopls.setup{ on_attach = on_attach, capabilities = capabilities, flags = flags }
           EOF
           "autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)
         '';
