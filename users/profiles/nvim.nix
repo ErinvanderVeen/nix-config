@@ -14,6 +14,7 @@
         local fn = vim.fn
         local g = vim.g
         local opt = vim.opt
+        local env = vim.env
 
         opt.mouse = 'a'
         opt.clipboard = 'unnamedplus'
@@ -41,10 +42,13 @@
         api.nvim_set_keymap('v', '<', '<gv', { noremap=true })
         api.nvim_set_keymap('v', '>', '>gv', { noremap=true })
 
+        -- Fast pane switching
         api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap=true })
         api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap=true })
         api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap=true })
         api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap=true })
+
+        env.RUST_SRC_PATH = '${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}'
       EOF
     '';
     extraPackages = with pkgs; [
