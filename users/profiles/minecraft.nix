@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    polymc
+    prismlauncher
     jdk17
     glfw
   ];
