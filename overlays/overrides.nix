@@ -17,6 +17,12 @@ channels: final: prev: {
     starship
     ;
 
+  vimPlugins = prev.vimPlugins // {
+    inherit (channels.latest.vimPlugins)
+      noice-nvim
+      ;
+  };
+
   haskellPackages = prev.haskellPackages.override
     (old: {
       overrides = prev.lib.composeExtensions (old.overrides or (_: _: { })) (hfinal: hprev:

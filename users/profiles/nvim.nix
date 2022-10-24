@@ -94,6 +94,20 @@
         '';
       }
       {
+        plugin = nvim-cursorline;
+        config = ''
+          lua <<EOF
+            require('nvim-cursorline').setup {
+              cursorline = {
+                enable = true,
+                timeout = 0,
+                number = true,
+              }
+            }
+          EOF
+        '';
+      }
+      {
         plugin = nvim-cmp;
         config = ''
           lua <<EOF
@@ -436,10 +450,10 @@
         '';
       }
       {
-        plugin = nvim-notify;
+        plugin = noice-nvim;
         config = ''
           lua <<EOF
-            require('notify').setup {}
+            require('noice').setup {}
           EOF
         '';
       }
