@@ -45,6 +45,11 @@
     sansSerif = [ "DejaVu Sans" ];
   };
 
+  nixpkgs = {
+    # enable unfree packages
+    config.allowUnfree = true;
+  };
+
   nix = {
     # Improve nix store disk usage
     autoOptimiseStore = true;
