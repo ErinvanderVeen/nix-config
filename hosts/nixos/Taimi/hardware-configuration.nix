@@ -13,36 +13,16 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/25405f69-212e-4f14-9473-0c1104d39269";
+      device = "/dev/disk/by-uuid/c2411402-3c84-4872-a6bd-0e8b004dd612";
       fsType = "ext4";
-    };
-
-  fileSystems."/nix/store" =
-    {
-      device = "/nix/store";
-      fsType = "none";
-      options = [ "bind" ];
     };
 
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/8557-C7A4";
+      device = "/dev/disk/by-uuid/A0F7-B6DF";
       fsType = "vfat";
     };
 
-  swapDevices =
-    [{ device = "/dev/disk/by-uuid/82f227c2-409c-4f35-9052-b3122e9e3094"; }];
-
-  boot.initrd.luks.devices = {
-    luksroot = {
-      device = "/dev/disk/by-uuid/0f384a9e-bf06-406a-9a54-9ee549528af4";
-      preLVM = true;
-      allowDiscards = true;
-    };
-  };
-
-
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Nvidia proprietary driver
