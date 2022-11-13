@@ -149,7 +149,7 @@
               development = [ ];
               laptop = [ gnome sway mozillavpn ];
               desktop = [ gnome mozillavpn ];
-              games = [ steam ];
+              games = [ steam minecraft ];
             };
           };
         };
