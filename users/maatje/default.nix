@@ -8,6 +8,6 @@
     hashedPassword = "$6$W4.2XHKmJsz7J7z6$HUkWiaWOfyea.I1UKofesTItWwQ8RHB3TKh4tTeEm5EzXth2GZGE0D8XDYy3mBZpUo1eHQmDoYgYIwaH7VRSE.";
     home = "/home/maatje";
     isNormalUser = true;
-    extraGroups = [ "wheel" "NetworkManager" "video" ];
+    extraGroups = [ "wheel" "networkmanager" "video" ];
   };
 }
