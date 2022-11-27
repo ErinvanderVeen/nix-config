@@ -1,5 +1,9 @@
 { pkgs, ... }:
 {
+  home.packages = with pkgs; [
+    gnome.gnome-todo
+  ];
+
   dconf.settings = {
     "org/gnome/desktop/wm/keybindings" = {
       switch-applications = [ ];
