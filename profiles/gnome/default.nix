@@ -13,7 +13,6 @@
     gnomeExtensions.blur-my-shell # Blur when opening menu
     gnomeExtensions.gsconnect # Connect to phone
     gnomeExtensions.vitals # Computer status
-    gnome.gnome-boxes
     gnome.pomodoro
   ];
 

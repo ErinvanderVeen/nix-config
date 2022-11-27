@@ -1,10 +1,6 @@
 { pkgs, ... }:
 {
   dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      gtk-theme = "Rose-Pine";
-    };
-
     "org/gnome/desktop/wm/keybindings" = {
       switch-applications = [ ];
       switch-applications-backward = [ ];
@@ -18,7 +14,6 @@
         "appindicatorsupport@rgcjonas.gmail.com"
         "gsconnect@andyholmes.github.io"
         "Vitals@CoreCoding.com"
-        "shell-volume-mixer@derhofbauer.at"
         "blur-my-shell@aunetx"
         "pomodoro@arun.codito.in"
       ];
@@ -31,6 +26,7 @@
     "org/gnome/shell" = {
       favorite-apps = [
         "firefox.desktop"
+        "alacritty.desktop"
         "org.gnome.Geary.desktop"
         "org.gnome.Calendar.desktop"
         "org.gnome.Music.desktop"
