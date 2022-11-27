@@ -5,9 +5,6 @@
     ./common.nix
   ];
 
-  # This is just a representation of the nix default
-  nix.systemFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-
   environment = {
 
     # Selection of sysadmin tools that can come in handy
@@ -51,10 +48,16 @@
   };
 
   nix = {
-    # Improve nix store disk usage
-    autoOptimiseStore = true;
+    settings = {
+      # Improve nix store disk usage
+      auto-optimise-store = true;
+
+      allowed-users = [ "@wheel" ];
+
+      # This is just a representation of the nix default
+      system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    };
     optimise.automatic = true;
-    allowedUsers = [ "@wheel" ];
   };
 
   users.defaultUserShell = pkgs.fish;

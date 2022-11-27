@@ -119,11 +119,13 @@ in
       options = "--delete-older-than 8d";
     };
 
-    # Prevents impurities in builds
-    useSandbox = true;
+    settings = {
+      # Prevents impurities in builds
+      sandbox = true;
 
-    # Give root user and wheel group special Nix privileges.
-    trustedUsers = [ "root" "@wheel" ];
+      # Give root user and wheel group special Nix privileges.
+      trusted-users = [ "root" "@wheel" ];
+    };
 
     # Generally useful nix option defaults
     extraOptions = ''

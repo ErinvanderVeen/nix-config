@@ -42,8 +42,7 @@
     ];
 
     # Administrative users on Darwin are part of this group.
-    trustedUsers = [ "@admin" ];
-
+    settings.trusted-users = [ "@admin" ];
   };
 
   programs.bash = {
