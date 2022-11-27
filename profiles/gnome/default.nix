@@ -10,7 +10,6 @@
 
   environment.systemPackages = with pkgs; [
     gnomeExtensions.appindicator # Sys tray
-    gnomeExtensions.bing-wallpaper-changer
     gnomeExtensions.blur-my-shell # Blur when opening menu
     gnomeExtensions.gsconnect # Connect to phone
     gnomeExtensions.vitals # Computer status

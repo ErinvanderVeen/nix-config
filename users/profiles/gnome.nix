@@ -16,7 +16,6 @@
       disable-user-extensions = false;
       enabled-extensions = [
         "appindicatorsupport@rgcjonas.gmail.com"
-        "BingWallpaper@ineffable-gmail.com"
         "gsconnect@andyholmes.github.io"
         "Vitals@CoreCoding.com"
         "shell-volume-mixer@derhofbauer.at"
