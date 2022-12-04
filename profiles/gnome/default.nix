@@ -12,7 +12,9 @@
     gnomeExtensions.appindicator # Sys tray
     gnomeExtensions.blur-my-shell # Blur when opening menu
     gnomeExtensions.gsconnect # Connect to phone
+    gnomeExtensions.syncthing-indicator
     gnomeExtensions.vitals # Computer status
+
     gnome.pomodoro
   ];
 

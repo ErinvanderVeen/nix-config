@@ -25,11 +25,12 @@
     "org/gnome/shell" = {
       disable-user-extensions = false;
       enabled-extensions = [
-        "appindicatorsupport@rgcjonas.gmail.com"
-        "gsconnect@andyholmes.github.io"
         "Vitals@CoreCoding.com"
+        "appindicatorsupport@rgcjonas.gmail.com"
         "blur-my-shell@aunetx"
+        "gsconnect@andyholmes.github.io"
         "pomodoro@arun.codito.in"
+        "syncthing@gnome.2nv2u.com"
       ];
     };
 
