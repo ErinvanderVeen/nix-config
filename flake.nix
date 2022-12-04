@@ -116,7 +116,6 @@
             Aurene = {
               channelName = "nixos";
               modules = with nixos-hardware.nixosModules; [
-                asus-battery
                 common-cpu-intel
                 common-cpu-intel-kaby-lake
                 common-pc-laptop
@@ -188,14 +187,14 @@
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
-              base = [ core direnv nvim zellij bat skim helix mail ];
-              development = [ git lazygit gitui github ];
-              desktop = [ sway gnome syncthing desktop-packages discord alacritty ];
-              music = [ mpd ];
-              work = [ tweag ];
-              games = [ minecraft lutris dolphin ];
-              game-debug = [ mangohud ];
+              base = [ core direnv nvim bat skim ];
               creative = [ digital-art ];
+              desktop = [ gnome syncthing desktop-packages discord alacritty ];
+              development = [ git lazygit github ];
+              game-debug = [ mangohud ];
+              games = [ minecraft lutris ];
+              tilling = [ sway ];
+              work = [ tweag ];
             };
           };
           users = {
@@ -209,15 +208,14 @@
               imports = suites.base
                 ++ suites.development
                 ++ suites.desktop
-                ++ suites.music
                 ++ suites.work
                 ++ suites.games
-                ++ suites.game-debug;
+                ++ suites.game-debug
+                ++ suites.tilling;
             };
             maatje = { suites, ... }: {
               imports = suites.base
                 ++ suites.desktop
-                ++ suites.music
                 ++ suites.creative
                 ++ suites.games;
             };
