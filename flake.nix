@@ -138,6 +138,12 @@
                 common-pc-ssd
               ];
             };
+            Tequatl = {
+              channelName = "nixos";
+              modules = with nixos-hardware.nixosModules; [
+                lenovo-thinkpad-x1-9th-gen
+              ];
+            };
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
