@@ -7,8 +7,12 @@
       aspell
       aspellDicts.en
       aspellDicts.nl
-      aspellDicts.nb
       aspellDicts.sv
+      hunspell
+      hunspellDicts.en_GB-ise
+      hunspellDicts.sv_SE
+      hunspellDicts.nl_NL
+
       keepassxc
       libreoffice-fresh
       signal-desktop
