@@ -19,4 +19,6 @@
     aspellDicts.nb
     aspellDicts.sv
   ];
+
+  home.stateVersion = "22.11";
 }
