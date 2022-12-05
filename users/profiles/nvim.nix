@@ -309,7 +309,7 @@
                   S = { "<cmd>lua require('telescope.builtin').diagnostics()<CR>", "Workspace Symbols" },
                   r = { "<cmd>lua vim.lsp.buf.references()<CR>", "Find References" },
                   R = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
-                  f = { "<cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>", "Format"},
+                  f = { "<cmd>lua vim.lsp.buf.format()<CR>", "Format"},
                   h = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
                   l = { "<cmd>e ~/.cache/nvim/lsp.log<CR>", "Open Log" },
                 },
@@ -342,7 +342,7 @@
             lspc.denols.setup{ on_attach = on_attach, capabilities = capabilities, flags = flags }
             lspc.gopls.setup{ on_attach = on_attach, capabilities = capabilities, flags = flags }
           EOF
-          "autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)
+          "autocmd BufWritePre * lua vim.lsp.buf.format()
         '';
       }
       {
