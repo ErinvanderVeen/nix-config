@@ -641,7 +641,7 @@
   };
 
   # The extraConfig is appended, resulting in problems with the leader key
-  xdg.configFile."nvim/init.vim".text =
+  xdg.configFile."nvim/init-home-manager.vim".text =
     pkgs.lib.mkBefore
       ''
         lua <<EOF
