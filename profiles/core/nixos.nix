@@ -71,6 +71,11 @@
     defaultEditor = true;
   };
 
+  programs.ssh = {
+    startAgent = true;
+  };
+
+
   # For rage encryption, all hosts need a ssh key pair
   services.openssh = {
     enable = true;
