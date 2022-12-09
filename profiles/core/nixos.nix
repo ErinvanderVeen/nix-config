@@ -5,6 +5,8 @@
     ./common.nix
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   environment = {
 
     # Selection of sysadmin tools that can come in handy
@@ -99,6 +101,7 @@
   };
 
   # Sound
+  sound.enable = true;
   # rtkit allows pipewire to get real time scheduling on demand (recommended by nixos wiki)
   security.rtkit.enable = true;
   services.pipewire = {
