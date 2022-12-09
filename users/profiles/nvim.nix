@@ -346,11 +346,12 @@
         '';
       }
       {
-        plugin = zephyr-nvim;
+        plugin = material-nvim;
         config = ''
           lua <<EOF
             vim.opt.termguicolors = true
-            require('zephyr')
+            vim.g.material_style = "deep ocean"
+            vim.cmd 'colorscheme material'
           EOF
         '';
       }
