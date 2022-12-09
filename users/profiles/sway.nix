@@ -89,6 +89,7 @@ in
       };
       input = {
         "*" = {
+          xkb_layout = "us";
           xkb_variant = "altgr-intl";
           xkb_options = "caps:swapescape";
           accel_profile = "flat";
@@ -99,9 +100,18 @@ in
         let
           modifier = config.wayland.windowManager.sway.config.modifier;
         in
+        # Don't override defaul keybinds
         lib.mkOptionDefault {
           "${modifier}+Shift+n" = "exec swaync-client -t -swb -sw";
           "${modifier}+Shift+s" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area";
+
+          # Mediakeys
+          "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
+          "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
+          "XF86AudioMute" = "exec ${pkgs.pamixer}/bin/pamixer -t";
+          "XF86AudioMicMute" = "exec ${pkgs.pamixer}/bin/pamixer --default-source -t";
+          "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl s 10%- -q";
+          "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl s +10% -q";
         };
       #keycodebindings = null;
       #left = null;
@@ -120,7 +130,7 @@ in
       terminal = "${pkgs.alacritty}/bin/alacritty";
       #up = null;
       #window = null;
-      workspaceAutoBackAndForth = true;
+      workspaceAutoBackAndForth = false;
       #workspaceLayout = null;
       #workspaceOutputAssign = null;
     };
