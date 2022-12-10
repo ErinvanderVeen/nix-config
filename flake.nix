@@ -196,7 +196,7 @@
               base = [ core direnv nvim bat skim ];
               creative = [ digital-art ];
               desktop = [ gnome syncthing desktop-packages discord alacritty ];
-              development = [ git lazygit github ];
+              development = [ git lazygit github ssh ];
               game-debug = [ mangohud ];
               games = [ minecraft lutris ];
               tilling = [ sway ];
