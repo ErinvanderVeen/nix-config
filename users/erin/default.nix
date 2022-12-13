@@ -5,7 +5,7 @@
   users.users.erin = {
     name = "erin";
     description = "Erin van der Veen";
-    hashedPassword = "$6$EFNn1XO7gCIxo4Yx$NJ3x1XWT9/7ONYVp1ZgzkyLToeUMdPSY38UdlA5nLQ9Yu4z4KBcLQr4/OxwWw8oKAtquXYrZf7nyUXWmHBHpi1";
+    hashedPassword = "$y$j9T$A4L2dC.8plzOSwqGEMBHe/$1VcvHokh.7jUR5LHVdCW3NOCKAIUgN1LfTxyBk3lxa6";
     home = "/home/erin";
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
