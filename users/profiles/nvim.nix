@@ -498,17 +498,6 @@
           EOF
         '';
       }
-      {
-        plugin = better-escape-nvim;
-        config = ''
-          lua <<EOF
-            require("better_escape").setup {
-                mapping = {"jk", "kj"},
-                clear_empty_lines = true,
-            }
-          EOF
-        '';
-      }
       # DAP
       {
         plugin = nvim-dap;
