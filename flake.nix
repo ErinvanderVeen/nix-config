@@ -39,8 +39,8 @@
       nvfetcher.url = "github:berberman/nvfetcher";
       nvfetcher.inputs.nixpkgs.follows = "nixos";
 
-      naersk.url = "github:nmattia/naersk";
-      naersk.inputs.nixpkgs.follows = "nixos";
+      nixvim.url = "github:pta2002/nixvim";
+      nixvim.inputs.nixpkgs.follows = "nixos";
 
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
