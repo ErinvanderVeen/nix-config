@@ -15,18 +15,12 @@
 
       keepassxc
       libreoffice-fresh
-      signal-desktop
       translate-shell
       trash-cli
       transmission-gtk
-      tor-browser-bundle-bin
-      element-desktop
       spotify
       helvum
       baobab
-
-      # For google meet (FF works, but camera quality is greatly reduced)
-      ungoogled-chromium
     ];
     keyboard = null;
   };
