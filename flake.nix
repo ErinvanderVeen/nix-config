@@ -199,6 +199,7 @@
               development = [ git lazygit github ssh ];
               game-debug = [ mangohud ];
               games = [ minecraft lutris ];
+              terminal-desktop = [ terminal-packages ];
               tilling = [ sway ];
               work = [ tweag ];
             };
@@ -212,12 +213,13 @@
             # My personal user
             erin = { suites, ... }: {
               imports = suites.base
-                ++ suites.development
                 ++ suites.desktop
-                ++ suites.work
-                ++ suites.games
+                ++ suites.development
                 ++ suites.game-debug
-                ++ suites.tilling;
+                ++ suites.games
+                ++ suites.terminal-desktop
+                ++ suites.tilling
+                ++ suites.work;
             };
             maatje = { suites, ... }: {
               imports = suites.base
