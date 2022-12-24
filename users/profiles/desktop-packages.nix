@@ -16,7 +16,6 @@
       keepassxc
       libreoffice-fresh
       translate-shell
-      trash-cli
       transmission-gtk
       spotify
       helvum
