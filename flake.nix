@@ -153,7 +153,7 @@
               base = [ core.nixos users.erin users.maatje users.root ];
               development = [ ];
               laptop = [ gnome sway mozillavpn printing ];
-              desktop = [ gnome mozillavpn printing ];
+              desktop = [ gnome mozillavpn printing desktop-config ];
               games = [ steam minecraft ];
             };
           };

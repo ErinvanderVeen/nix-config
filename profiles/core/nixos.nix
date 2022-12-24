@@ -115,7 +115,4 @@
     pulse.enable = true;
   };
   hardware.pulseaudio.enable = false;
-
-  # Boot related
-  boot.plymouth.enable = true;
 }
