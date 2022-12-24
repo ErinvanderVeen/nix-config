@@ -3,9 +3,9 @@
   imports = [
     ./hardware-configuration.nix
   ] ++ suites.base
-  ++ suites.laptop
-  ++ suites.games
-  ++ suites.development;
+  ++ suites.erin
+  ++ suites.personal
+  ++ suites.tiling;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

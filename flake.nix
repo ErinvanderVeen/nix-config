@@ -150,10 +150,12 @@
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core.nixos users.erin users.maatje users.root ];
-              development = [ ];
-              laptop = [ gnome sway mozillavpn printing ];
-              desktop = [ gnome mozillavpn printing desktop-config ];
+              base = [ core.nixos users.root ];
+              maatje = [ users.maatje ];
+              erin = [ users.erin ];
+              # Personal computing
+              personal = [ gnome mozillavpn printing desktop-config ];
+              tiling = [ sway ];
               games = [ steam minecraft ];
             };
           };

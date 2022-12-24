@@ -3,9 +3,9 @@
   imports = [
     ./hardware-configuration.nix
   ] ++ suites.base
-  ++ suites.desktop
+  ++ suites.maatje
   ++ suites.games
-  ++ suites.development;
+  ++ suites.personal;
 
   boot.loader = {
     systemd-boot = {

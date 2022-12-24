@@ -3,9 +3,10 @@
   imports = [
     ./hardware-configuration.nix
   ] ++ suites.base
-  ++ suites.desktop
+  ++ suites.erin
   ++ suites.games
-  ++ suites.development;
+  ++ suites.personal
+  ++ suites.tiling;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
