@@ -243,6 +243,10 @@
                 ++ suites.games
                 ++ suites.vpn;
             };
+            kyjan = { suites, ... }: {
+              imports = suites.base
+                ++ suites.desktop;
+            };
 
             darwin = { suites, ... }: { imports = suites.base; };
           };
