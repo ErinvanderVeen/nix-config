@@ -165,7 +165,8 @@
               erin = [ users.erin ];
               kyjan = [ users.kyjan ];
               # Personal computing
-              personal = [ gnome mozillavpn printing desktop-config ];
+              personal = [ gnome printing desktop-config ];
+              vpn = [ mozillavpn ];
               tiling = [ sway ];
               games = [ steam minecraft ];
             };
@@ -206,7 +207,7 @@
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
-              base = [ core direnv neovim bat skim ];
+              base = [ core direnv neovim helix bat skim ];
               creative = [ digital-art ];
               desktop = [ gnome syncthing desktop-packages discord alacritty ];
               development = [ git lazygit github ssh ];
@@ -232,13 +233,15 @@
                 ++ suites.games
                 ++ suites.terminal-desktop
                 ++ suites.tilling
+                ++ suites.vpn
                 ++ suites.work;
             };
             maatje = { suites, ... }: {
               imports = suites.base
                 ++ suites.desktop
                 ++ suites.creative
-                ++ suites.games;
+                ++ suites.games
+                ++ suites.vpn;
             };
 
             darwin = { suites, ... }: { imports = suites.base; };
