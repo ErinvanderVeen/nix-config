@@ -56,6 +56,7 @@
     , nur
     , agenix
     , nvfetcher
+    , nixvim
     , deploy
     , nixpkgs
     , ...
@@ -125,7 +126,7 @@
             Gwen = {
               channelName = "nixos";
               modules = with nixos-hardware.nixosModules; [
-                common-gpu-nvidia
+                common-gpu-nvidia-nonprime
                 common-pc
                 common-pc-ssd
               ];
@@ -133,7 +134,7 @@
             Taimi = {
               channelName = "nixos";
               modules = with nixos-hardware.nixosModules; [
-                common-gpu-nvidia
+                common-gpu-nvidia-nonprime
                 common-pc
                 common-pc-ssd
               ];
@@ -142,6 +143,15 @@
               channelName = "nixos";
               modules = with nixos-hardware.nixosModules; [
                 lenovo-thinkpad-x1-9th-gen
+              ];
+            };
+            Junkrat = {
+              channelName = "nixos";
+              modules = with nixos-hardware.nixosModules; [
+                common-cpu-intel
+                common-cpu-intel-kaby-lake
+                common-pc-laptop
+                common-pc-laptop-ssd
               ];
             };
           };
@@ -153,6 +163,7 @@
               base = [ core.nixos users.root ];
               maatje = [ users.maatje ];
               erin = [ users.erin ];
+              kyjan = [ users.kyjan ];
               # Personal computing
               personal = [ gnome mozillavpn printing desktop-config ];
               tiling = [ sway ];
@@ -191,11 +202,11 @@
 
         home = {
           imports = [ (digga.lib.importExportableModules ./users/modules) ];
-          modules = [ ];
+          modules = [ nixvim.homeManagerModules.nixvim ];
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
-              base = [ core direnv nvim bat skim ];
+              base = [ core direnv neovim bat skim ];
               creative = [ digital-art ];
               desktop = [ gnome syncthing desktop-packages discord alacritty ];
               development = [ git lazygit github ssh ];
