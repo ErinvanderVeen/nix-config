@@ -17,6 +17,7 @@
       libreoffice-fresh
       translate-shell
       transmission-gtk
+      signal-desktop
       spotify
       helvum
       baobab
