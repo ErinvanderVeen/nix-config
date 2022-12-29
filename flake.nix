@@ -233,15 +233,13 @@
                 ++ suites.games
                 ++ suites.terminal-desktop
                 ++ suites.tilling
-                ++ suites.vpn
                 ++ suites.work;
             };
             maatje = { suites, ... }: {
               imports = suites.base
                 ++ suites.desktop
                 ++ suites.creative
-                ++ suites.games
-                ++ suites.vpn;
+                ++ suites.games;
             };
             kyjan = { suites, ... }: {
               imports = suites.base

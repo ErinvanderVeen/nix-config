@@ -5,6 +5,7 @@
   ] ++ suites.base
   ++ suites.erin
   ++ suites.games
+  ++ suites.vpn
   ++ suites.personal
   ++ suites.tiling;
 
