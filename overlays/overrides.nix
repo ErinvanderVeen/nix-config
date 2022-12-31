@@ -10,6 +10,7 @@ channels: final: prev: {
     element-desktop
     helix
     lutris
+    mozillavpn
     nix-index
     nixpkgs-fmt
     rage
