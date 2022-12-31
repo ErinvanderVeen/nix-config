@@ -5,6 +5,7 @@
   ] ++ suites.base
   ++ suites.erin
   ++ suites.personal
+  ++ suites.vpn
   ++ suites.tiling;
 
   # Bootloader.
