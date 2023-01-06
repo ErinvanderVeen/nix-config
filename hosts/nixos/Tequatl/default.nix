@@ -7,7 +7,6 @@
   ++ suites.personal
   ++ suites.vpn
   ++ suites.tiling;
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

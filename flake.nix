@@ -149,18 +149,26 @@
                 common-pc-laptop-ssd
               ];
             };
+            Tybalt = {
+              channelName = "nixos";
+              system = "aarch64-linux";
+              modules = with nixos-hardware.nixosModules; [
+                raspberry-pi-4
+              ];
+            };
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core.nixos users.root ];
+              base = [ core.nixos users.root users.nixos ];
               maatje = [ users.maatje ];
               erin = [ users.erin ];
               kyjan = [ users.kyjan ];
               # Personal computing
               personal = [ gnome printing desktop-config ];
+              server = [ syncthing ];
               vpn = [ mozillavpn ];
               tiling = [ sway ];
               games = [ steam minecraft ];
