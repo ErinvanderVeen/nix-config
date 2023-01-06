@@ -5,6 +5,7 @@
   ] ++ suites.base
   ++ suites.vpn
   ++ suites.server
+  ++ suites.home-server
   ;
 
   boot = {

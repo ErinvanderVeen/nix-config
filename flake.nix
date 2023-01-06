@@ -158,6 +158,7 @@
             };
           };
           importables = rec {
+            inherit nixos-hardware;
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
             };
@@ -169,6 +170,7 @@
               # Personal computing
               personal = [ gnome printing desktop-config ];
               server = [ syncthing ];
+              home-server = [ jellyfin ];
               vpn = [ mozillavpn ];
               tiling = [ sway ];
               games = [ steam minecraft ];
