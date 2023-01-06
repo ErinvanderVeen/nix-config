@@ -36,9 +36,6 @@
       agenix.url = "github:ryantm/agenix";
       agenix.inputs.nixpkgs.follows = "nixos";
 
-      nvfetcher.url = "github:berberman/nvfetcher";
-      nvfetcher.inputs.nixpkgs.follows = "nixos";
-
       nixvim.url = "github:pta2002/nixvim";
       nixvim.inputs.nixpkgs.follows = "nixos";
 
@@ -55,7 +52,6 @@
     , nixos-hardware
     , nur
     , agenix
-    , nvfetcher
     , nixvim
     , deploy
     , nixpkgs
@@ -91,7 +87,6 @@
 
           nur.overlay
           agenix.overlay
-          nvfetcher.overlay
 
           (import ./pkgs)
         ];

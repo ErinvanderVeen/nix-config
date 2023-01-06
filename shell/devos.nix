@@ -8,7 +8,7 @@ let
     mdbook
     nixUnstable
     nixpkgs-fmt
-    nvfetcher-bin
+    nvfetcher
     ;
 
   hooks = import ./hooks;
@@ -31,9 +31,9 @@ in
 
     {
       category = "devos";
-      name = nvfetcher-bin.pname;
-      help = nvfetcher-bin.meta.description;
-      command = "cd $PRJ_ROOT/pkgs; ${nvfetcher-bin}/bin/nvfetcher -c ./sources.toml $@";
+      name = nvfetcher.pname;
+      help = nvfetcher.meta.description;
+      command = "cd $PRJ_ROOT/pkgs; ${nvfetcher}/bin/nvfetcher -c ./sources.toml $@";
     }
 
     (linter nixpkgs-fmt)
