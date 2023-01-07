@@ -28,6 +28,7 @@
   #boot.loader.grub.enable = false;
   #boot.loader.systemd-boot.enable = false;
   #boot.loader.generic-extlinux-compatible.enable = false;
+  swapDevices = [ { device = "/swapfile"; size = 2048; } ];
 
   networking = {
     useDHCP = false;
