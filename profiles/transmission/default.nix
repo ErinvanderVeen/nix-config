@@ -2,7 +2,7 @@
 {
   services.transmission = {
     enable = true;
-    group = "jellyfin";
+    group = "media";
     openFirewall = true;
     settings = {
       download-dir = "/var/media/series";

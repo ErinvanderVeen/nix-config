@@ -1,0 +1,6 @@
+{ pkgs, ... }:
+{
+  users.groups = {
+    media = {};
+  };
+}

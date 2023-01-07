@@ -170,7 +170,7 @@
               # Personal computing
               personal = [ gnome printing desktop-config ];
               server = [ syncthing ];
-              home-server = [ jellyfin transmission ];
+              home-server = [ jellyfin transmission media-group ];
               vpn = [ mozillavpn ];
               tiling = [ sway ];
               games = [ steam minecraft ];
