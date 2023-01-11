@@ -7,6 +7,8 @@
 
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
+  time.timeZone = lib.mkDefault "Europe/Stockholm";
+
   environment = {
 
     # Selection of sysadmin tools that can come in handy
