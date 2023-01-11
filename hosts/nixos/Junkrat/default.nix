@@ -10,7 +10,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.useDHCP = true;
+  networking.interfaces.wlp2s0.useDHCP = true;
 
   time.timeZone = "Europe/Amsterdam";
 
