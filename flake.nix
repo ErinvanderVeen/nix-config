@@ -218,6 +218,7 @@
               development = [ git lazygit github ssh ];
               game-debug = [ mangohud ];
               games = [ minecraft lutris ];
+              kyjan = [ kyjan-packages ];
               terminal-desktop = [ terminal-packages ];
               tilling = [ sway ];
               work = [ tweag ];
@@ -248,7 +249,8 @@
             };
             kyjan = { suites, ... }: {
               imports = suites.base
-                ++ suites.desktop;
+                ++ suites.desktop
+                ++ suites.kyjan;
             };
 
             darwin = { suites, ... }: { imports = suites.base; };
