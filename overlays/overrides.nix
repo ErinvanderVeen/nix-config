@@ -3,9 +3,6 @@ channels: final: prev: {
   __dontExport = true; # overrides clutter up actual creations
 
   inherit (channels.latest)
-    cachix
-    deploy-rs
-    dhall
     discord
     element-desktop
     helix
@@ -13,9 +10,9 @@ channels: final: prev: {
     mozillavpn
     nix-index
     nixpkgs-fmt
-    rage
     signal-desktop
     starship
+    olive-editor# I pushed a fix for unstable, remove for 23.05
     ;
 
   vimPlugins = prev.vimPlugins // {
