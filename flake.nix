@@ -214,11 +214,12 @@
             suites = with profiles; rec {
               base = [ core direnv neovim helix bat skim ];
               creative = [ digital-art ];
-              desktop = [ gnome syncthing desktop-packages discord alacritty ];
-              development = [ git lazygit github ssh ];
+              desktop = [ gnome desktop-packages discord ];
+              development = [ git lazygit github ssh alacritty ];
               game-debug = [ mangohud ];
               games = [ minecraft lutris ];
               kyjan = [ kyjan-packages ];
+              backup = [ syncthing ];
               terminal-desktop = [ terminal-packages ];
               tilling = [ sway ];
               work = [ tweag ];
@@ -239,12 +240,14 @@
                 ++ suites.games
                 ++ suites.terminal-desktop
                 ++ suites.tilling
+                ++ suites.backup
                 ++ suites.work;
             };
             maatje = { suites, ... }: {
               imports = suites.base
                 ++ suites.desktop
                 ++ suites.creative
+                ++ suites.backup
                 ++ suites.games;
             };
             kyjan = { suites, ... }: {
