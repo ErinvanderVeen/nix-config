@@ -12,5 +12,7 @@
 
   networking.useDHCP = true;
 
+  time.timeZone = "Europe/Amsterdam";
+
   system.stateVersion = "22.11";
 }
