@@ -163,7 +163,7 @@
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core.nixos users.root users.nixos ];
+              base = [ core.nixos users.root users.nixos update ];
               maatje = [ users.maatje ];
               erin = [ users.erin ];
               kyjan = [ users.kyjan ];
