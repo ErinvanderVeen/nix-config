@@ -109,7 +109,6 @@ in
     # Improve nix store disk usage
     gc = {
       automatic = true;
-      options = "--delete-older-than 8d";
     };
 
     settings = {
@@ -123,8 +122,8 @@ in
     # Generally useful nix option defaults
     extraOptions = ''
       min-free = 536870912
-      keep-outputs = true
-      keep-derivations = true
+      keep-outputs = false
+      keep-derivations = false
       fallback = true
     '';
 
