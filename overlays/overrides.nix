@@ -8,11 +8,12 @@ channels: final: prev: {
     helix
     lutris
     mozillavpn
+    nil
     nix-index
     nixpkgs-fmt
+    olive-editor# I pushed a fix for unstable, remove for 23.05
     signal-desktop
     starship
-    olive-editor# I pushed a fix for unstable, remove for 23.05
     ;
 
   vimPlugins = prev.vimPlugins // {
