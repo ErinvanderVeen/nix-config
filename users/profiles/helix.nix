@@ -5,7 +5,7 @@
     wl-clipboard
 
     # Language servers
-    rnix-lsp
+    nil # Nix
   ];
 
   programs.helix = {
