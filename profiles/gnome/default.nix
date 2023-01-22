@@ -14,8 +14,7 @@
     gnomeExtensions.gsconnect # Connect to phone
     gnomeExtensions.syncthing-indicator
     gnomeExtensions.vitals # Computer status
-
-    gnome.pomodoro
+    gnomeExtensions.task-widget # Tasks
   ];
 
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];

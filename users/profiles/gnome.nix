@@ -29,8 +29,8 @@
         "appindicatorsupport@rgcjonas.gmail.com"
         "blur-my-shell@aunetx"
         "gsconnect@andyholmes.github.io"
-        "pomodoro@arun.codito.in"
         "syncthing@gnome.2nv2u.com"
+        "task-widget@juozasmiskinis.gitlab.io"
       ];
     };
 
