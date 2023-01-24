@@ -4,6 +4,7 @@
 
   users.users.nixos = {
     description = "default";
+    initialHashedPassword = "$y$j9T$YL05DpRpKY0L9JEbeUvvu/$zdCZDf9iDJ0B3T9n2y7fKoIyHQhhB981Dcdff19Kqf9";
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = [
