@@ -109,6 +109,7 @@ in
     # Improve nix store disk usage
     gc = {
       automatic = true;
+      options = "--delete-older-than 30d";
     };
 
     settings = {
