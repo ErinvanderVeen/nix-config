@@ -3,6 +3,7 @@
 {
   system.autoUpgrade = {
     enable = true;
+    dates = "Sun";
     # Override for our servers
     allowReboot = lib.mkDefault false;
     flags = [ "--update-input" "nixpkgs" "--no-write-lock-file" ];
