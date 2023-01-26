@@ -4,25 +4,43 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ ];
+  imports =
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
+    ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/c2411402-3c84-4872-a6bd-0e8b004dd612";
+      device = "/dev/disk/by-uuid/77a0fae9-01e4-49c1-b51b-46dac520412b";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
+  boot.initrd.luks.devices."luks-4be0b4e0-0a31-47b3-830f-353d9aaad5a0".device = "/dev/disk/by-uuid/4be0b4e0-0a31-47b3-830f-353d9aaad5a0";
+
+  fileSystems."/boot/efi" =
     {
-      device = "/dev/disk/by-uuid/A0F7-B6DF";
+      device = "/dev/disk/by-uuid/611C-5A7B";
       fsType = "vfat";
     };
 
+  swapDevices =
+    [{ device = "/dev/disk/by-uuid/049cd491-2499-42a8-b44a-896a76b92d78"; }];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp5s0.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Nvidia proprietary driver
