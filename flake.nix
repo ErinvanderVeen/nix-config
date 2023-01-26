@@ -36,9 +36,6 @@
       agenix.url = "github:ryantm/agenix";
       agenix.inputs.nixpkgs.follows = "nixos";
 
-      nixvim.url = "github:pta2002/nixvim";
-      nixvim.inputs.nixpkgs.follows = "nixos";
-
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
       nixos-generators.url = "github:nix-community/nixos-generators";
@@ -50,9 +47,7 @@
     , nixos
     , home
     , nixos-hardware
-    , nur
     , agenix
-    , nixvim
     , deploy
     , nixpkgs
     , ...
@@ -85,7 +80,6 @@
             });
           })
 
-          nur.overlay
           agenix.overlay
 
           (import ./pkgs)
@@ -208,11 +202,11 @@
 
         home = {
           imports = [ (digga.lib.importExportableModules ./users/modules) ];
-          modules = [ nixvim.homeManagerModules.nixvim ];
+          modules = [ ];
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
-              base = [ core direnv neovim helix bat skim ];
+              base = [ core direnv helix bat skim ];
               creative = [ digital-art ];
               desktop = [ gnome desktop-packages discord ];
               development = [ git lazygit github ssh alacritty ];
