@@ -89,6 +89,11 @@
   # Service that makes Out of Memory Killer more effective
   services.earlyoom.enable = true;
 
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
+
   # X11 related configuration
   services.xserver = {
     enable = true;
