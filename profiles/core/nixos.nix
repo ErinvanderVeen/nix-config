@@ -96,7 +96,6 @@
 
   # X11 related configuration
   services.xserver = {
-    enable = true;
     # Configure keymap in X11
     layout = "us";
     xkbVariant = "altgr-intl";
