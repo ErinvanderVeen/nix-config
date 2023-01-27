@@ -40,7 +40,7 @@
     };
   };
 
-  swapDevices = [{ device = "/swapfile"; size = 2048; }];
+  swapDevices = [{ device = "/swapfile"; size = 4096; }];
 
   networking = {
     useDHCP = false;
