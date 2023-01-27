@@ -163,7 +163,7 @@
               kyjan = [ users.kyjan ];
               # Personal computing
               personal = [ gnome printing desktop-config ];
-              server = [ syncthing users.nixos ];
+              server = [ syncthing users.nixos update-reboot ];
               home-server = [ jellyfin transmission media-group ];
               vpn = [ mozillavpn ];
               tiling = [ sway ];
