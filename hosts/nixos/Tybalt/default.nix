@@ -13,28 +13,38 @@
     initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
     # ttyAMA0 is the serial console broken out to the GPIO
     kernelParams = [
-        "8250.nr_uarts=1"
-        "console=ttyAMA0,115200"
-        "console=tty1"
-        # A lot GUI programs need this, nearly all wayland applications
-        "cma=128M"
+      "8250.nr_uarts=1"
+      "console=ttyAMA0,115200"
+      "console=tty1"
+      # A lot GUI programs need this, nearly all wayland applications
+      "cma=128M"
     ];
   };
 
-  #boot.loader.raspberryPi = {
-    #enable = true;
-    #version = 4;
-  #};
-  #boot.loader.grub.enable = false;
-  #boot.loader.systemd-boot.enable = false;
-  #boot.loader.generic-extlinux-compatible.enable = false;
-  swapDevices = [ { device = "/swapfile"; size = 2048; } ];
+  systemd.services.mozillavpn-activate = {
+    description = "Starts the mozilla-vpn client by user nixos after the daemon has started.";
+    requires = [ "mozillavpn.service" "network.target" ];
+    after = [ "mozillavpn.service" "network.target" ];
+    wantedBy = [ "default.target" ];
+    script = ''
+      set -eux
+      ${pkgs.mozillavpn}/bin/mozillavpn activate
+      on=$(${pkgs.mozillavpn}/bin/mozillavpn status | ${pkgs.ripgrep}/bin/rg "VPN state: (.*)" -r '$1')
+      [ "$on" = "on" ]
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "nixos";
+      Restart = "on-failure";
+      RestartSec = 10;
+    };
+  };
+
+  swapDevices = [{ device = "/swapfile"; size = 2048; }];
 
   networking = {
     useDHCP = false;
     interfaces.eth0.useDHCP = true;
-    # ERror in journalctl
-    enableIPv6 = false;
   };
 
   system.stateVersion = "22.11";
