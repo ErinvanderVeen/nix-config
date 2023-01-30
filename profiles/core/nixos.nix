@@ -122,5 +122,8 @@
     alsa.enable = true;
     pulse.enable = true;
   };
-  hardware.pulseaudio.enable = false;
+  hardware = {
+    pulseaudio.enable = false;
+    enableRedistributableFirmware = true;
+  };
 }
