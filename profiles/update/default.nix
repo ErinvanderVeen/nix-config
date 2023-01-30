@@ -4,6 +4,7 @@
   system.autoUpgrade = {
     enable = true;
     dates = "Sun";
+    randomizedDelaySec = "10min";
     # Override for our servers
     allowReboot = lib.mkDefault false;
     flags = [ "--update-input" "nixpkgs" "--no-write-lock-file" ];
