@@ -33,9 +33,6 @@
       deploy.url = "github:serokell/deploy-rs";
       deploy.inputs.nixpkgs.follows = "nixos";
 
-      agenix.url = "github:ryantm/agenix";
-      agenix.inputs.nixpkgs.follows = "nixos";
-
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
       nixos-generators.url = "github:nix-community/nixos-generators";
@@ -47,7 +44,6 @@
     , nixos
     , home
     , nixos-hardware
-    , agenix
     , deploy
     , nixpkgs
     , ...
@@ -80,8 +76,6 @@
             });
           })
 
-          agenix.overlay
-
           (import ./pkgs)
         ];
 
@@ -95,7 +89,6 @@
               digga.nixosModules.bootstrapIso
               digga.nixosModules.nixConfig
               home.nixosModules.home-manager
-              agenix.nixosModules.age
             ];
           };
 
@@ -181,7 +174,6 @@
               { lib.our = self.lib; }
               digga.darwinModules.nixConfig
               home.darwinModules.home-manager
-              agenix.nixosModules.age
             ];
           };
 

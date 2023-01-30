@@ -2,7 +2,6 @@
 let
 
   inherit (pkgs)
-    agenix
     cachix
     editorconfig-checker
     mdbook
@@ -27,7 +26,6 @@ in
 
   commands = [
     (devos nixUnstable)
-    (devos agenix)
 
     {
       category = "devos";
