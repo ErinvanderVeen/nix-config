@@ -205,6 +205,7 @@
               game-debug = [ mangohud ];
               games = [ minecraft lutris ];
               kyjan = [ kyjan-packages ];
+              maatje = [ maatje-packages ];
               backup = [ syncthing ];
               terminal-desktop = [ terminal-packages ];
               tilling = [ sway ];
@@ -234,6 +235,7 @@
                 ++ suites.desktop
                 ++ suites.creative
                 ++ suites.backup
+                ++ suites.maatje
                 ++ suites.games;
             };
             kyjan = { suites, ... }: {
