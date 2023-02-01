@@ -21,6 +21,7 @@
       spotify
       helvum
       baobab
+      pinta
     ];
     keyboard = null;
   };
