@@ -200,7 +200,7 @@
             suites = with profiles; rec {
               base = [ core direnv helix bat skim ];
               creative = [ digital-art ];
-              desktop = [ gnome desktop-packages discord ];
+              desktop = [ desktop-packages discord ];
               development = [ git lazygit github ssh alacritty ];
               game-debug = [ mangohud ];
               games = [ minecraft lutris ];
