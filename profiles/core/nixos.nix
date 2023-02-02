@@ -9,6 +9,8 @@
 
   time.timeZone = lib.mkDefault "Europe/Stockholm";
 
+  networking.networkmanager.enable = true;
+
   environment = {
 
     # Selection of sysadmin tools that can come in handy
