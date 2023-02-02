@@ -3,9 +3,10 @@
   imports = [
     ./hardware-configuration.nix
   ] ++ suites.base
-  ++ suites.erin
-  ++ suites.maatje
-  ++ suites.personal;
+  ++ suites.vpn
+  ++ suites.server
+  ++ suites.home-server
+  ;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
