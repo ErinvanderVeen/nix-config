@@ -157,7 +157,7 @@
               # Personal computing
               personal = [ gnome printing desktop-config ];
               server = [ syncthing users.nixos update-reboot ];
-              home-server = [ jellyfin transmission media-group autostart-vpn ];
+              home-server = [ jellyfin transmission media-group autostart-vpn kodi ];
               vpn = [ mozillavpn ];
               tiling = [ sway ];
               games = [ steam minecraft ];
