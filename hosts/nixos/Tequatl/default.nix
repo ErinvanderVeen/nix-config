@@ -6,6 +6,7 @@
   ++ suites.erin
   ++ suites.personal
   ++ suites.vpn
+  ++ suites.games
   ++ suites.tiling;
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
