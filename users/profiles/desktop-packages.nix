@@ -19,7 +19,6 @@
       transmission-gtk
       signal-desktop
       spotify
-      helvum
       baobab
       pinta
     ];
