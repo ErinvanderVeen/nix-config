@@ -5,8 +5,6 @@
     ./common.nix
   ];
 
-  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
-
   time.timeZone = lib.mkDefault "Europe/Stockholm";
 
   networking.networkmanager.enable = true;
