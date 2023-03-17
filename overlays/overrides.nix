@@ -14,6 +14,7 @@ channels: final: prev: {
     olive-editor# I pushed a fix for unstable, remove for 23.05
     signal-desktop
     starship
+    steam
     ;
 
   vimPlugins = prev.vimPlugins // {
