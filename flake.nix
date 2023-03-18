@@ -208,7 +208,7 @@
             suites = with profiles; rec {
               base = [ core direnv helix bat skim ];
               creative = [ digital-art ];
-              desktop = [ desktop-packages discord ];
+              desktop = [ desktop-packages ];
               development = [ git lazygit github ssh alacritty ];
               game-debug = [ mangohud ];
               games = [ minecraft lutris ];
@@ -230,13 +230,14 @@
             erin = { suites, ... }: {
               imports = suites.base
                 ++ suites.desktop
-                ++ suites.development
-                ++ suites.game-debug
-                ++ suites.games
+                # ++ suites.development
+                # ++ suites.game-debug
+                # ++ suites.games
                 ++ suites.terminal-desktop
-                ++ suites.tilling
-                ++ suites.backup
-                ++ suites.work;
+                # ++ suites.tilling
+                # ++ suites.backup
+                # ++ suites.work;
+              ;
             };
             maatje = { suites, ... }: {
               imports = suites.base

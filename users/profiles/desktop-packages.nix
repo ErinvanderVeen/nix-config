@@ -14,13 +14,8 @@
       hunspellDicts.nl_NL
 
       keepassxc
-      libreoffice-fresh
-      translate-shell
       transmission-gtk
-      signal-desktop
-      spotify
       baobab
-      pinta
     ];
     keyboard = null;
   };
