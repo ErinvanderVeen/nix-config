@@ -33,6 +33,11 @@
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
       nixos-generators.url = "github:nix-community/nixos-generators";
+
+      mobile-nixos = {
+        url = "github:nixos/mobile-nixos";
+        flake = false;
+      };
     };
 
   outputs =
@@ -43,6 +48,7 @@
     , nixos-hardware
     , deploy
     , nixpkgs
+    , mobile-nixos
     , ...
     } @ inputs:
     digga.lib.mkFlake
@@ -89,8 +95,15 @@
 
           imports = [ (digga.lib.importHosts ./hosts/nixos) ];
           hosts = {
-            # Default configuration (for bootstrap ISO etc)
-            NixOS = { };
+            Ogden = {
+              system = "aarch64-linux";
+              channelName = "nixos";
+              modules = [
+                (import "${mobile-nixos}/lib/configuration.nix" {
+                  device = "oneplus-enchilada";
+                })
+              ];
+            };
             Aurene = {
               channelName = "nixos";
               modules = with nixos-hardware.nixosModules; [

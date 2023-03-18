@@ -238,6 +238,22 @@
         "type": "github"
       }
     },
+    "mobile-nixos": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1678992712,
+        "narHash": "sha256-EfDLphjcd6wOkjyqd8M/skF9Nzx7SYHbrRc8UrpUVfA=",
+        "owner": "nixos",
+        "repo": "mobile-nixos",
+        "rev": "a331f48178189d9dc1af4531059624326105a517",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "mobile-nixos",
+        "type": "github"
+      }
+    },
     "nixlib": {
       "locked": {
         "lastModified": 1679187309,
@@ -386,6 +402,7 @@
         "digga": "digga",
         "home": "home",
         "latest": "latest",
+        "mobile-nixos": "mobile-nixos",
         "nixos": "nixos",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
