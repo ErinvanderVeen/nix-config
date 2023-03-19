@@ -5,6 +5,7 @@
     packages = with pkgs; [
       mixxx
       olive-editor
+      whatsapp-for-linux
     ];
   };
 }
