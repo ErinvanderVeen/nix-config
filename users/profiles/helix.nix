@@ -3,10 +3,22 @@
   home.packages = with pkgs; [
     # clipboard
     wl-clipboard
+    xclip
 
     # Language servers
-    nil # Nix
+    ## Nix
+    nil
+
+    ## Rust
+    cargo
+    rustc
+    rust-analyzer
+    rustfmt
   ];
+
+  home.sessionVariables = {
+    RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+  };
 
   programs.helix = {
     enable = true;
