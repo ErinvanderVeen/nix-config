@@ -16,6 +16,8 @@
     gnomeExtensions.vitals # Computer status
     gnomeExtensions.task-widget # Tasks
     gnomeExtensions.dash-to-dock # Pin dock
+
+    blackbox-terminal
   ];
 
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
