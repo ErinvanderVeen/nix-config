@@ -24,6 +24,20 @@
     chatty # IM and SMS
     epiphany # Web browser
     gnome-console # Terminal
+    gnome-secrets
+    gnome.eog
+    gnome.file-roller
+    gnome.geary
+    gnome.gnome-calculator
+    gnome.gnome-calendar
+    gnome.gnome-clocks
+    gnome.gnome-contacts
+    gnome.gnome-maps
+    gnome.gnome-music
+    gnome.gnome-system-monitor
+    gnome.gnome-weather
+    gnome.nautilus
+    gnome.totem
     megapixels # Camera
   ];
 

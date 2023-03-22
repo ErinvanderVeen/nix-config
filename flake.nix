@@ -230,12 +230,12 @@
             erin = { suites, ... }: {
               imports = suites.base
                 ++ suites.desktop
-                # ++ suites.development
+                ++ suites.development
                 # ++ suites.game-debug
                 # ++ suites.games
                 ++ suites.terminal-desktop
                 # ++ suites.tilling
-                # ++ suites.backup
+                ++ suites.backup
                 # ++ suites.work;
               ;
             };
