@@ -108,7 +108,7 @@
             Gwen = {
               channelName = "nixos";
               modules = with nixos-hardware.nixosModules; [
-                common-gpu-nvidia-nonprime
+                common-gpu-amd
                 common-pc
                 common-pc-ssd
               ];
