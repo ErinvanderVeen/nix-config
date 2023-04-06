@@ -45,15 +45,14 @@
     settings.trusted-users = [ "@admin" ];
   };
 
-  programs.bash = {
+  programs.fish = {
     # nix-darwin's shell options are very different from those on nixos. there
     # is no `promptInit` option, for example. so instead, we throw the prompt
     # init line into `interactiveShellInit`.
     #
     # https://github.com/LnL7/nix-darwin/blob/master/modules/programs/bash/default.nix
     interactiveShellInit = ''
-      eval "$(${pkgs.starship}/bin/starship init bash)"
-      eval "$(${pkgs.direnv}/bin/direnv hook bash)"
+      ${pkgs.starship}/bin/starship init fish | source
     '';
   };
 

@@ -75,8 +75,6 @@
               our = self.lib;
             });
           })
-
-          (import ./pkgs)
         ];
 
         nixos = {

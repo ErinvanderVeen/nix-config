@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -23,26 +23,16 @@
     shellAliases =
       let ifSudo = lib.mkIf config.security.sudo.enable; in
       {
-        # nix
-        nrb = ifSudo "sudo nixos-rebuild";
-
-        # fix nixos-option for flake compat
-        nixos-option = "nixos-option -I nixpkgs=${self}/lib/compat";
-
         # systemd
         ctl = "systemctl";
         stl = ifSudo "s systemctl";
         utl = "systemctl --user";
-        ut = "systemctl --user start";
-        un = "systemctl --user stop";
-        up = ifSudo "s systemctl start";
-        dn = ifSudo "s systemctl stop";
         jtl = "journalctl";
       };
   };
 
   fonts.fontconfig.defaultFonts = {
-    monospace = [ "DejaVu Sans Mono for Powerline" ];
+    monospace = [ "DejaVu Sans Mono" ];
     sansSerif = [ "DejaVu Sans" ];
   };
 
@@ -67,16 +57,9 @@
   users.defaultUserShell = pkgs.fish;
   programs.fish.enable = true;
 
-  # Make sure we have a decent default editor
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-  };
-
   programs.ssh = {
     startAgent = true;
   };
-
 
   # For rage encryption, all hosts need a ssh key pair
   services.openssh = {
@@ -99,7 +82,6 @@
     # Configure keymap in X11
     layout = "us";
     xkbVariant = "altgr-intl";
-    xkbOptions = "caps:swapescape";
 
     libinput = {
       # Enable touchpad support (enabled default in most desktopManager).
