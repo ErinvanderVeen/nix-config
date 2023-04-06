@@ -16,7 +16,6 @@
 
     extraConfig = {
       init.defaultBranch = "main";
-      merge.tool = "nvimdiff";
       pull.rebase = false;
     };
 
