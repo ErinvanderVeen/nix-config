@@ -11,11 +11,17 @@ in
 
   environment = {
 
+    variables = {
+      # Set a decent default editor
+      EDITOR = "hx";
+    };
+
     # Selection of sysadmin tools that can come in handy
     systemPackages = with pkgs; [
       alejandra
       bat
       binutils
+      bottom
       coreutils
       curl
       direnv
@@ -24,9 +30,8 @@ in
       fd
       fzf
       git
-      bottom
+      helix
       jq
-      manix
       moreutils
       nix-index
       nmap
@@ -36,15 +41,6 @@ in
       trash-cli
       whois
     ];
-
-    # Starship is a fast and featureful shell prompt
-    # starship.toml has sane defaults that can be changed there
-    shellInit = ''
-      export STARSHIP_CONFIG=${
-        pkgs.writeText "starship.toml"
-        (fileContents ./starship.toml)
-      }
-    '';
 
     shellAliases =
       let
@@ -77,10 +73,8 @@ in
         nepl = "n repl '<nixpkgs>'";
         srch = "ns nixos";
         orch = "ns override";
-        mn = ''
-          manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | sk --preview="manix '{}'" | xargs manix
-        '';
         top = "btm";
+        htop = "btm";
 
         # sudo
         s = ifSudo "sudo -E ";
@@ -102,7 +96,7 @@ in
       };
   };
 
-  fonts.fonts = with pkgs; [ powerline-fonts dejavu_fonts ];
+  fonts.fonts = with pkgs; [ dejavu_fonts ];
 
   nix = {
 
@@ -127,7 +121,13 @@ in
       keep-derivations = false
       fallback = true
     '';
+  };
 
+  programs.fish = {
+    enable = true;
+    promptInit = ''
+      ${pkgs.starship}/bin/starship init fish | source
+    '';
   };
 
 }

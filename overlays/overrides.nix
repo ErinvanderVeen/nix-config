@@ -2,8 +2,10 @@ channels: final: prev: {
 
   __dontExport = true; # overrides clutter up actual creations
 
+  # We want to user openASAR for Discord
+  discord = prev.discord.override { withOpenASAR = true; };
+
   inherit (channels.latest)
-    discord
     element-desktop
     helix
     lutris
@@ -16,12 +18,6 @@ channels: final: prev: {
     starship
     steam
     ;
-
-  vimPlugins = prev.vimPlugins // {
-    inherit (channels.latest.vimPlugins)
-      noice-nvim
-      ;
-  };
 
   haskellPackages = prev.haskellPackages.override
     (old: {
