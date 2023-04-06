@@ -30,9 +30,6 @@
       darwin.url = "github:LnL7/nix-darwin";
       darwin.inputs.nixpkgs.follows = "nixpkgs-darwin-stable";
 
-      deploy.url = "github:serokell/deploy-rs";
-      deploy.inputs.nixpkgs.follows = "nixos";
-
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
       nixos-generators.url = "github:nix-community/nixos-generators";
