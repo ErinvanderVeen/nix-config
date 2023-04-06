@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     # clipboard
     wl-clipboard
@@ -15,7 +14,6 @@
     rust-analyzer
     rustfmt
   ];
-
   home.sessionVariables = {
     RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
   };
@@ -50,5 +48,15 @@
         };
       };
     };
+    languages = [
+      {
+        name = "nix";
+        auto-format = true;
+        formatter = {
+          command = "${pkgs.alejandra}/bin/alejandra";
+          args = [ "-q" ];
+        };
+      }
+    ];
   };
 }
