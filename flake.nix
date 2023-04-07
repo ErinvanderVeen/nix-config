@@ -5,35 +5,34 @@
   nixConfig.extra-substituters = "https://nrdxp.cachix.org https://nix-community.cachix.org";
   nixConfig.extra-trusted-public-keys = "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
 
-  inputs =
-    {
-      # Track channels with commits tested and built by hydra
-      nixos.url = "github:nixos/nixpkgs/nixos-22.11";
-      latest.url = "github:nixos/nixpkgs/nixos-unstable";
-      # For darwin hosts: it can be helpful to track this darwin-specific stable
-      # channel equivalent to the `nixos-*` channels for NixOS. For one, these
-      # channels are more likely to provide cached binaries for darwin systems.
-      # But, perhaps even more usefully, it provides a place for adding
-      # darwin-specific overlays and packages which could otherwise cause build
-      # failures on Linux systems.
-      nixpkgs-darwin-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
+  inputs = {
+    # Track channels with commits tested and built by hydra
+    nixos.url = "github:nixos/nixpkgs/nixos-22.11";
+    latest.url = "github:nixos/nixpkgs/nixos-unstable";
+    # For darwin hosts: it can be helpful to track this darwin-specific stable
+    # channel equivalent to the `nixos-*` channels for NixOS. For one, these
+    # channels are more likely to provide cached binaries for darwin systems.
+    # But, perhaps even more usefully, it provides a place for adding
+    # darwin-specific overlays and packages which could otherwise cause build
+    # failures on Linux systems.
+    nixpkgs-darwin-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
 
-      digga.url = "github:divnix/digga";
-      digga.inputs.nixpkgs.follows = "nixos";
-      digga.inputs.nixlib.follows = "nixos";
-      digga.inputs.home-manager.follows = "home";
-      digga.inputs.deploy.follows = "deploy";
+    digga.url = "github:divnix/digga";
+    digga.inputs.nixpkgs.follows = "nixos";
+    digga.inputs.nixlib.follows = "nixos";
+    digga.inputs.home-manager.follows = "home";
+    digga.inputs.deploy.follows = "deploy";
 
-      home.url = "github:nix-community/home-manager/release-22.11";
-      home.inputs.nixpkgs.follows = "nixos";
+    home.url = "github:nix-community/home-manager/release-22.11";
+    home.inputs.nixpkgs.follows = "nixos";
 
-      darwin.url = "github:LnL7/nix-darwin";
-      darwin.inputs.nixpkgs.follows = "nixpkgs-darwin-stable";
+    darwin.url = "github:LnL7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs-darwin-stable";
 
-      nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
-      nixos-generators.url = "github:nix-community/nixos-generators";
-    };
+    nixos-generators.url = "github:nix-community/nixos-generators";
+  };
 
   outputs =
     { self
@@ -141,9 +140,11 @@
           };
           importables = rec {
             inherit nixos-hardware;
-            profiles = digga.lib.rakeLeaves ./profiles // {
-              users = digga.lib.rakeLeaves ./users;
-            };
+            profiles =
+              digga.lib.rakeLeaves ./profiles
+              // {
+                users = digga.lib.rakeLeaves ./users;
+              };
             suites = with profiles; rec {
               base = [ core.nixos users.root update ];
               maatje = [ users.maatje ];
@@ -174,13 +175,17 @@
 
           imports = [ (digga.lib.importHosts ./hosts/darwin) ];
           hosts = {
-            /* set host-specific properties here */
+            /*
+          set host-specific properties here
+            */
             Mac = { };
           };
           importables = rec {
-            profiles = digga.lib.rakeLeaves ./profiles // {
-              users = digga.lib.rakeLeaves ./users;
-            };
+            profiles =
+              digga.lib.rakeLeaves ./profiles
+              // {
+                users = digga.lib.rakeLeaves ./users;
+              };
             suites = with profiles; rec {
               base = [ core.darwin users.darwin ];
             };
@@ -210,12 +215,14 @@
           users = {
             # Server user
             nixos = { suites, ... }: {
-              imports = suites.base
+              imports =
+                suites.base
                 ++ suites.development;
             };
             # My personal user
             erin = { suites, ... }: {
-              imports = suites.base
+              imports =
+                suites.base
                 ++ suites.desktop
                 ++ suites.development
                 ++ suites.game-debug
@@ -226,7 +233,8 @@
                 ++ suites.work;
             };
             maatje = { suites, ... }: {
-              imports = suites.base
+              imports =
+                suites.base
                 ++ suites.desktop
                 ++ suites.creative
                 ++ suites.backup
@@ -234,7 +242,8 @@
                 ++ suites.games;
             };
             kyjan = { suites, ... }: {
-              imports = suites.base
+              imports =
+                suites.base
                 ++ suites.desktop
                 ++ suites.kyjan;
             };
@@ -247,13 +256,11 @@
 
         # TODO: similar to the above note: does it make sense to make all of
         # these users available on all systems?
-        homeConfigurations = digga.lib.mergeAny
-          (digga.lib.mkHomeConfigurations self.darwinConfigurations)
-          (digga.lib.mkHomeConfigurations self.nixosConfigurations)
-        ;
+        homeConfigurations =
+          digga.lib.mergeAny
+            (digga.lib.mkHomeConfigurations self.darwinConfigurations)
+            (digga.lib.mkHomeConfigurations self.nixosConfigurations);
 
         deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
-
-      }
-  ;
+      };
 }
