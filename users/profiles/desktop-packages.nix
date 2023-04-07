@@ -1,6 +1,5 @@
 # This module contains all packages without much/any configuration.
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home = {
     packages = with pkgs; [
       # SPELLING
@@ -13,14 +12,15 @@
       hunspellDicts.sv_SE
       hunspellDicts.nl_NL
 
+      baobab
+      element-desktop
       keepassxc
       libreoffice-fresh
-      translate-shell
-      transmission-gtk
+      pinta
       signal-desktop
       spotify
-      baobab
-      pinta
+      translate-shell
+      transmission-gtk
     ];
     keyboard = null;
   };
