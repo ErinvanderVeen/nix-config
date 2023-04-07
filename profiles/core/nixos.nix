@@ -1,6 +1,8 @@
-{ config, lib, pkgs, ... }:
-
-{
+{ config
+, lib
+, pkgs
+, ...
+}: {
   imports = [
     ./common.nix
   ];
@@ -10,7 +12,6 @@
   networking.networkmanager.enable = true;
 
   environment = {
-
     # Selection of sysadmin tools that can come in handy
     systemPackages = with pkgs; [
       dosfstools
@@ -21,7 +22,9 @@
     ];
 
     shellAliases =
-      let ifSudo = lib.mkIf config.security.sudo.enable; in
+      let
+        ifSudo = lib.mkIf config.security.sudo.enable;
+      in
       {
         # systemd
         ctl = "systemctl";
@@ -82,15 +85,6 @@
     # Configure keymap in X11
     layout = "us";
     xkbVariant = "altgr-intl";
-
-    libinput = {
-      # Enable touchpad support (enabled default in most desktopManager).
-      enable = true;
-      mouse = {
-        accelProfile = "flat";
-        accelSpeed = "-0.5";
-      };
-    };
   };
 
   users.mutableUsers = true;

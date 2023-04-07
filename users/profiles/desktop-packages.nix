@@ -13,6 +13,7 @@
       hunspellDicts.nl_NL
 
       baobab
+      blackbox-terminal
       element-desktop
       keepassxc
       libreoffice-fresh
