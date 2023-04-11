@@ -78,6 +78,11 @@
   services.avahi = {
     enable = true;
     nssmdns = true;
+    ipv6 = false;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
   };
 
   # X11 related configuration
