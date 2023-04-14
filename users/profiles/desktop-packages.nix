@@ -7,8 +7,10 @@
       aspellDicts.en
       aspellDicts.nl
       aspellDicts.sv
+
       hunspell
       hunspellDicts.en_GB-ise
+      hunspellDicts.en_US
       hunspellDicts.sv_SE
       hunspellDicts.nl_NL
 
