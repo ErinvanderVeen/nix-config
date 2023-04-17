@@ -10,5 +10,6 @@
     mono
     dxvk
     wget
+    appimage-run
   ];
 }
