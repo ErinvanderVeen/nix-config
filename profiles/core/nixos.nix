@@ -17,6 +17,7 @@
       dosfstools
       gptfdisk
       iputils
+      pciutils
       usbutils
       utillinux
     ];
