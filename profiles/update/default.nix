@@ -1,6 +1,9 @@
 # This module is reponsible for automatically keeping our NixOS machines up to date
-{ pkgs, lib, config, ... }:
-{
+{ pkgs
+, lib
+, config
+, ...
+}: {
   system.autoUpgrade = {
     enable = true;
     dates = "Sun";
@@ -12,8 +15,10 @@
   };
 
   environment.shellAliases =
-    let ifSudo = lib.mkIf config.security.sudo.enable; in
+    let
+      ifSudo = lib.mkIf config.security.sudo.enable;
+    in
     {
-      nixos-update = ifSudo "sudo nixos-rebuild switch --flake github:ErinvanderVeen/nix-config --update-input nixpkgs --no-write-lock-file";
+      nixos-update = ifSudo "sudo nixos-rebuild switch --flake github:ErinvanderVeen/nix-config --update-input nixpkgs --update-input nixos --update-input latest --no-write-lock-file";
     };
 }
