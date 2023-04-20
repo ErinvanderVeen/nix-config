@@ -1,13 +1,14 @@
-{ suites, ... }:
-{
-  imports = [
-    ./hardware-configuration.nix
-  ] ++ suites.base
-  ++ suites.erin
-  ++ suites.games
-  ++ suites.vpn
-  ++ suites.personal
-  ++ suites.tiling;
+{ suites, ... }: {
+  imports =
+    [
+      ./hardware-configuration.nix
+    ]
+    ++ suites.base
+    ++ suites.erin
+    ++ suites.games
+    ++ suites.vpn
+    ++ suites.personal
+    ++ suites.tiling;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -17,6 +18,8 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
+
+  services.xserver.displayManager.autoLogin.user = "erin";
 
   system.stateVersion = "21.11";
 }
