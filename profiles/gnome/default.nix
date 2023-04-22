@@ -15,7 +15,6 @@
     ])
     ++ (with pkgs.gnome; [
       gnome-characters
-      totem
     ]);
 
   environment.systemPackages = with pkgs.gnomeExtensions; [
