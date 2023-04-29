@@ -8,7 +8,6 @@ let
   inherit
     (pkgs)
     cachix
-    editorconfig-checker
     nixUnstable
     nixpkgs-fmt
     nvfetcher
@@ -38,7 +37,6 @@ in
       }
 
       (linter nixpkgs-fmt)
-      (linter editorconfig-checker)
     ]
     ++ lib.optionals (!pkgs.stdenv.buildPlatform.isi686) [
       (devos cachix)
