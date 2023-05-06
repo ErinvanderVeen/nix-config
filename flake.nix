@@ -21,7 +21,6 @@
     digga.inputs.nixpkgs.follows = "nixos";
     digga.inputs.nixlib.follows = "nixos";
     digga.inputs.home-manager.follows = "home";
-    digga.inputs.deploy.follows = "deploy";
 
     home.url = "github:nix-community/home-manager/release-22.11";
     home.inputs.nixpkgs.follows = "nixos";
@@ -40,7 +39,6 @@
     , nixos
     , home
     , nixos-hardware
-    , deploy
     , nixpkgs
     , ...
     } @ inputs:
@@ -260,7 +258,5 @@
           digga.lib.mergeAny
             (digga.lib.mkHomeConfigurations self.darwinConfigurations)
             (digga.lib.mkHomeConfigurations self.nixosConfigurations);
-
-        deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
       };
 }
