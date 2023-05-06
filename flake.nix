@@ -149,7 +149,7 @@
               base = [ core.nixos users.root update ];
               maatje = [ users.maatje ];
               erin = [ users.erin ];
-              kyjan = [ users.kyjan ];
+              kyjan = [ users.kyjan ios ];
               # Personal computing
               personal = [ gnome printing desktop-config ];
               server = [ syncthing users.nixos update-reboot ];
